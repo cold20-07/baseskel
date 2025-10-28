@@ -5,17 +5,23 @@ This version works without external database connections for testing
 
 from fastapi import FastAPI, APIRouter, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
 import os
+import logging
 from pathlib import Path
 from dotenv import load_dotenv
 
 # Load environment variables
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Create the main app
 app = FastAPI(
@@ -24,8 +30,65 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# Custom exception handler for 404 errors
+@app.exception_handler(404)
+async def not_found_handler(request: Request, exc: HTTPException):
+    path = request.url.path
+    if "/api/services/" in path:
+        service_slug = path.split("/api/services/")[-1]
+        available_services = [s["slug"] for s in MOCK_SERVICES]
+        return JSONResponse(
+            status_code=404,
+            content={
+                "detail": f"Service '{service_slug}' not found",
+                "available_services": available_services,
+                "suggestion": "Check the available service slugs listed above"
+            }
+        )
+    elif "/api/blog/" in path:
+        blog_slug = path.split("/api/blog/")[-1]
+        available_blogs = [b["slug"] for b in MOCK_BLOG_POSTS]
+        return JSONResponse(
+            status_code=404,
+            content={
+                "detail": f"Blog post '{blog_slug}' not found",
+                "available_blogs": available_blogs,
+                "suggestion": "Check the available blog post slugs listed above"
+            }
+        )
+    else:
+        return JSONResponse(
+            status_code=404,
+            content={"detail": "Resource not found"}
+        )
+
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
+
+# Request logging middleware
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = datetime.now()
+    
+    # Process the request
+    response = await call_next(request)
+    
+    # Calculate processing time
+    process_time = (datetime.now() - start_time).total_seconds()
+    
+    # Log the request
+    if response.status_code >= 400:
+        logger.warning(
+            f"{request.method} {request.url.path} - {response.status_code} "
+            f"({process_time:.3f}s) - Client: {request.client.host}"
+        )
+    else:
+        logger.info(
+            f"{request.method} {request.url.path} - {response.status_code} "
+            f"({process_time:.3f}s)"
+        )
+    
+    return response
 
 # CORS middleware
 cors_origins = os.environ.get('CORS_ORIGINS', 'http://localhost:3000,*').split(',')
@@ -279,7 +342,35 @@ MOCK_BLOG_POSTS = [
 # Routes
 @api_router.get("/")
 async def root():
-    return {"message": "Dr. Kishan Bhalani Medical Documentation API"}
+    return {
+        "message": "Dr. Kishan Bhalani Medical Documentation API",
+        "version": "1.0.0",
+        "endpoints": {
+            "services": "/api/services",
+            "blog": "/api/blog",
+            "contact": "/api/contact",
+            "health": "/api/health",
+            "resources": "/api/resources"
+        }
+    }
+
+@api_router.get("/resources")
+async def get_available_resources():
+    """Get all available services and blog posts"""
+    return {
+        "services": {
+            "count": len(MOCK_SERVICES),
+            "available": [{"slug": s["slug"], "title": s["title"]} for s in MOCK_SERVICES]
+        },
+        "blog_posts": {
+            "count": len(MOCK_BLOG_POSTS),
+            "available": [{"slug": b["slug"], "title": b["title"]} for b in MOCK_BLOG_POSTS]
+        },
+        "usage": {
+            "service_detail": "/api/services/{slug}",
+            "blog_detail": "/api/blog/{slug}"
+        }
+    }
 
 @api_router.get("/services", response_model=List[Service])
 async def get_services():
@@ -289,7 +380,17 @@ async def get_services():
 async def get_service_by_slug(slug: str):
     service = next((s for s in MOCK_SERVICES if s["slug"] == slug), None)
     if not service:
-        raise HTTPException(status_code=404, detail="Service not found")
+        logger.warning(f"Service not found: {slug}")
+        available_services = [s["slug"] for s in MOCK_SERVICES]
+        raise HTTPException(
+            status_code=404, 
+            detail={
+                "message": f"Service '{slug}' not found",
+                "available_services": available_services,
+                "total_services": len(MOCK_SERVICES)
+            }
+        )
+    logger.info(f"Service accessed: {slug}")
     return service
 
 @api_router.get("/blog", response_model=List[BlogPost])
@@ -312,7 +413,17 @@ async def get_blog_posts(
 async def get_blog_post(slug: str):
     post = next((p for p in MOCK_BLOG_POSTS if p["slug"] == slug), None)
     if not post:
-        raise HTTPException(status_code=404, detail="Blog post not found")
+        logger.warning(f"Blog post not found: {slug}")
+        available_blogs = [b["slug"] for b in MOCK_BLOG_POSTS]
+        raise HTTPException(
+            status_code=404, 
+            detail={
+                "message": f"Blog post '{slug}' not found",
+                "available_blogs": available_blogs,
+                "total_posts": len(MOCK_BLOG_POSTS)
+            }
+        )
+    logger.info(f"Blog post accessed: {slug}")
     return post
 
 @api_router.post("/contact", response_model=Contact)
