@@ -384,6 +384,24 @@ class Contact(BaseModel):
 async def root():
     return {"message": "Dr. Kishan Bhalani Medical Documentation API"}
 
+# Root level health check for deployment platforms
+@app.get("/")
+async def root_health():
+    return {
+        "message": "Dr. Kishan Bhalani Medical Documentation Services",
+        "status": "healthy",
+        "version": "1.0.0",
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
+
+@app.get("/health")
+async def root_health_check():
+    return {
+        "status": "healthy",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "hipaa_compliant": True
+    }
+
 
 @api_router.get("/services", response_model=List[Service])
 async def get_services():
