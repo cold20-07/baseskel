@@ -31,11 +31,12 @@ def main():
         print("=" * 50)
         
         # Start the server
+        port = int(os.environ.get("PORT", 8000))
         uvicorn.run(
-            "server_simple:app",
+            "server:app",
             host="0.0.0.0",
-            port=8000,
-            reload=True,
+            port=port,
+            reload=False,  # Disable reload in production
             log_level="info"
         )
         
@@ -48,11 +49,12 @@ def main():
             print("✅ Simplified server loaded")
             print("✅ All features available with mock data")
             
+            port = int(os.environ.get("PORT", 8000))
             uvicorn.run(
                 "server_simple:app",
                 host="0.0.0.0",
-                port=8000,
-                reload=True,
+                port=port,
+                reload=False,  # Disable reload in production
                 log_level="info"
             )
         except Exception as e2:

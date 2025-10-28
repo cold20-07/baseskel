@@ -1,0 +1,22 @@
+{
+  "name": "dr-kishan-bhalani-medical-services",
+  "version": "1.0.0",
+  "description": "HIPAA-compliant medical documentation services for veterans",
+  "scripts": {
+    "dev": "python start_dev.py",
+    "backend": "cd backend && python run_server.py",
+    "frontend": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "test-connection": "python ../test_connection.py",
+    "connect": "python ../connect_backend.py"
+  },
+  "keywords": [
+    "medical",
+    "documentation",
+    "veterans",
+    "hipaa",
+    "healthcare"
+  ],
+  "author": "Dr. Kishan Bhalani",
+  "license": "MIT"
+}

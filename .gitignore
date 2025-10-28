@@ -1,80 +1,93 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# IDE and editors
-.idea/
-.vscode/
-
 # Dependencies
 node_modules/
-/node_modules
-/.pnp
-.pnp.js
-.yarn/install-state.gz
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Testing
-/coverage
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Next.js
-/.next/
-/out/
-next-env.d.ts
-*.tsbuildinfo
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# Production builds
-/build
-dist/
-dist
-
-# Environment files (comprehensive coverage)
-
-*token.json*
-*credentials.json*
-
-# Logs and debug files
+# Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
-dump.rdb
 
-# System files
-.DS_Store
-*.pem
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# Python
-__pycache__/
-*pyc*
-venv/
-.venv/
+# Coverage directory used by tools like istanbul
+coverage/
 
-# Development tools
-chainlit.md
-.chainlit
-.ipynb_checkpoints/
-.ac
+# nyc test coverage
+.nyc_output
 
-# Deployment
-.vercel
+# Dependency directories
+jspm_packages/
 
-# Data and databases
-agenthub/agents/youtube/db
+# Optional npm cache directory
+.npm
 
-# Archive files and large assets
-**/*.zip
-**/*.tar.gz
-**/*.tar
-**/*.tgz
-*.pack
-*.deb
-*.dylib
+# Optional REPL history
+.node_repl_history
 
-# Build caches
-.cache/
+# Output of 'npm pack'
+*.tgz
 
-# Mobile development
-android-sdk/ 
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build outputs
+build/
+dist/
+*.tsbuildinfo
+
+# Uploads and temporary files
+uploads/
+temp/
+tmp/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# HIPAA audit logs (keep structure, not content)
+hipaa_audit.log
+
+# Pytest cache
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
