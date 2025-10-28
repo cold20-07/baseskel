@@ -384,23 +384,17 @@ class Contact(BaseModel):
 async def root():
     return {"message": "Dr. Kishan Bhalani Medical Documentation API"}
 
-# Root level health check for deployment platforms
-@app.get("/")
-async def root_health():
-    return {
-        "message": "Dr. Kishan Bhalani Medical Documentation Services",
-        "status": "healthy",
-        "version": "1.0.0",
-        "timestamp": datetime.now(timezone.utc).isoformat()
-    }
 
-@app.get("/health")
-async def root_health_check():
+@api_router.get("/health")
+async def api_health_check():
+    """API Health check endpoint"""
     return {
         "status": "healthy",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "hipaa_compliant": True
     }
+
+
 
 
 @api_router.get("/services", response_model=List[Service])
@@ -567,6 +561,24 @@ async def create_contact(contact_data: ContactCreate, request: Request):
         
         raise HTTPException(status_code=500, detail="Error creating contact")
 
+
+# Root level health check for deployment platforms
+@app.get("/")
+async def root_health():
+    return {
+        "message": "Dr. Kishan Bhalani Medical Documentation Services",
+        "status": "healthy",
+        "version": "1.0.0",
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
+
+@app.get("/health")
+async def root_health_check():
+    return {
+        "status": "healthy",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "hipaa_compliant": True
+    }
 
 # Include the router in the main app
 app.include_router(api_router)
@@ -813,17 +825,6 @@ else:
     @api_router.get("/files")
     async def list_files_disabled():
         raise HTTPException(status_code=503, detail="File service not available")
-
-
-# Health check endpoint
-@api_router.get("/health")
-async def health_check():
-    """Health check endpoint"""
-    return {
-        "status": "healthy",
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "hipaa_compliant": True
-    }
 
 
 # No cleanup needed for Supabase client
