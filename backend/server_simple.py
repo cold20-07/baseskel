@@ -31,37 +31,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Custom exception handler for 404 errors
-@app.exception_handler(404)
-async def not_found_handler(request: Request, exc: HTTPException):
-    path = request.url.path
-    if "/api/services/" in path:
-        service_slug = path.split("/api/services/")[-1]
-        available_services = [s["slug"] for s in MOCK_SERVICES]
-        return JSONResponse(
-            status_code=404,
-            content={
-                "detail": f"Service '{service_slug}' not found",
-                "available_services": available_services,
-                "suggestion": "Check the available service slugs listed above"
-            }
-        )
-    elif "/api/blog/" in path:
-        blog_slug = path.split("/api/blog/")[-1]
-        available_blogs = [b["slug"] for b in MOCK_BLOG_POSTS]
-        return JSONResponse(
-            status_code=404,
-            content={
-                "detail": f"Blog post '{blog_slug}' not found",
-                "available_blogs": available_blogs,
-                "suggestion": "Check the available blog post slugs listed above"
-            }
-        )
-    else:
-        return JSONResponse(
-            status_code=404,
-            content={"detail": "Resource not found"}
-        )
+
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
@@ -417,6 +387,38 @@ MOCK_BLOG_POSTS = [
 # In-memory storage for orders and appointments (in production, use a database)
 MOCK_ORDERS = []
 MOCK_APPOINTMENTS = []
+
+# Custom exception handler for 404 errors (defined after mock data)
+@app.exception_handler(404)
+async def not_found_handler(request: Request, exc: HTTPException):
+    path = request.url.path
+    if "/api/services/" in path:
+        service_slug = path.split("/api/services/")[-1]
+        available_services = [s["slug"] for s in MOCK_SERVICES]
+        return JSONResponse(
+            status_code=404,
+            content={
+                "detail": f"Service '{service_slug}' not found",
+                "available_services": available_services,
+                "suggestion": "Check the available service slugs listed above"
+            }
+        )
+    elif "/api/blog/" in path:
+        blog_slug = path.split("/api/blog/")[-1]
+        available_blogs = [b["slug"] for b in MOCK_BLOG_POSTS]
+        return JSONResponse(
+            status_code=404,
+            content={
+                "detail": f"Blog post '{blog_slug}' not found",
+                "available_blogs": available_blogs,
+                "suggestion": "Check the available blog post slugs listed above"
+            }
+        )
+    else:
+        return JSONResponse(
+            status_code=404,
+            content={"detail": "Resource not found"}
+        )
 
 # Service availability data
 SERVICE_AVAILABILITY = {
