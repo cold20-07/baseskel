@@ -17,12 +17,95 @@ const Services = () => {
         setServices(response.data);
       } catch (error) {
         console.error('Error fetching services:', error);
+        // Fallback to mock data when backend is unavailable
+        setServices(mockServices);
       } finally {
         setLoading(false);
       }
     };
     fetchServices();
   }, []);
+
+  // Mock services data as fallback
+  const mockServices = [
+    {
+      id: "1",
+      slug: "nexus-rebuttal-letters",
+      title: "Nexus & Rebuttal Letters",
+      shortDescription: "Comprehensive medical opinions for claims and appeals",
+      features: ["Nexus opinion letters", "Rebuttal to VA denials", "Direct/secondary/aggravation analysis", "Clear medical rationale"],
+      basePriceInINR: 4999,
+      duration: "7-10 business days",
+      category: "nexus-letter",
+      icon: "file-text"
+    },
+    {
+      id: "2",
+      slug: "public-dbqs",
+      title: "Public DBQs",
+      shortDescription: "Standardized disability questionnaires for VA claims",
+      features: ["Latest public VA DBQs", "Objective findings", "Functional impact"],
+      basePriceInINR: 3999,
+      duration: "5-7 business days",
+      category: "dbq",
+      icon: "clipboard"
+    },
+    {
+      id: "3",
+      slug: "aid-attendance",
+      title: "Aid & Attendance (21-2680)",
+      shortDescription: "Enhanced pension benefits for veterans needing assistance",
+      features: ["Physician evaluation", "ADL documentation", "When clinically indicated"],
+      basePriceInINR: 5999,
+      duration: "10-14 business days",
+      category: "aid-attendance",
+      icon: "heart-pulse"
+    },
+    {
+      id: "4",
+      slug: "cp-coaching",
+      title: "C&P Coaching",
+      shortDescription: "Preparation for compensation and pension examinations",
+      features: ["What to expect", "Accurate symptom reporting", "Logbooks & lay tips"],
+      basePriceInINR: 2499,
+      duration: "Same day or next business day",
+      category: "coaching",
+      icon: "users"
+    },
+    {
+      id: "5",
+      slug: "expert-consultation",
+      title: "One-on-One Consultation with Expert",
+      shortDescription: "Personal consultation to review your claim with medical expert",
+      features: ["Personal consultation with Dr. Bhalani", "Comprehensive claim review", "Medical condition assessment", "Personalized recommendations"],
+      basePriceInINR: 3499,
+      duration: "1-hour consultation scheduled within 3-5 days",
+      category: "consultation",
+      icon: "users"
+    },
+    {
+      id: "6",
+      slug: "record-review",
+      title: "Record Review",
+      shortDescription: "Professional analysis of your medical documentation",
+      features: ["Service/med records synthesis", "Timeline build", "Provider question set"],
+      basePriceInINR: 2999,
+      duration: "5-7 business days",
+      category: "review",
+      icon: "file-search"
+    },
+    {
+      id: "7",
+      slug: "1151-claim",
+      title: "1151 Claim (VA Medical Malpractice)",
+      shortDescription: "Expert medical opinions for VA medical negligence claims",
+      features: ["VA treatment record analysis", "Medical negligence assessment", "Causation nexus opinions", "Standard of care evaluation"],
+      basePriceInINR: 7999,
+      duration: "10-14 business days",
+      category: "malpractice",
+      icon: "alert-triangle"
+    }
+  ];
 
   const getIconComponent = (iconName) => {
     const icons = {

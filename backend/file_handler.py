@@ -12,7 +12,12 @@ from pathlib import Path
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timezone, timedelta
 import secrets
-import magic
+try:
+    import magic
+    HAS_MAGIC = True
+except ImportError:
+    HAS_MAGIC = False
+    magic = None
 from PIL import Image
 import io
 import logging
@@ -103,9 +108,12 @@ class HIPAAFileHandler:
         file_content = file.file.read(1024)  # Read first 1KB for MIME detection
         file.file.seek(0)  # Reset file pointer
         
-        try:
-            detected_mime = magic.from_buffer(file_content, mime=True)
-        except:
+        if HAS_MAGIC and magic:
+            try:
+                detected_mime = magic.from_buffer(file_content, mime=True)
+            except:
+                detected_mime = mimetypes.guess_type(file.filename)[0] or 'application/octet-stream'
+        else:
             detected_mime = mimetypes.guess_type(file.filename)[0] or 'application/octet-stream'
         
         # Validate MIME type matches extension

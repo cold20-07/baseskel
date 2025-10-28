@@ -22,12 +22,86 @@ const Home = () => {
         setBlogPosts(blogRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
+        // Fallback to mock data when backend is unavailable
+        setServices(mockServices.slice(0, 4));
+        setBlogPosts(mockBlogPosts);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
   }, []);
+
+  // Mock data as fallback
+  const mockServices = [
+    {
+      id: "1",
+      slug: "nexus-rebuttal-letters",
+      title: "Nexus & Rebuttal Letters",
+      shortDescription: "Comprehensive medical opinions for claims and appeals",
+      features: ["Nexus opinion letters", "Rebuttal to VA denials", "Clear medical rationale"],
+      basePriceInINR: 4999,
+      duration: "7-10 business days",
+      category: "nexus-letter",
+      icon: "file-text"
+    },
+    {
+      id: "2",
+      slug: "public-dbqs",
+      title: "Public DBQs",
+      shortDescription: "Standardized disability questionnaires for VA claims",
+      features: ["Latest public VA DBQs", "Objective findings", "Functional impact"],
+      basePriceInINR: 3999,
+      duration: "5-7 business days",
+      category: "dbq",
+      icon: "clipboard"
+    },
+    {
+      id: "5",
+      slug: "expert-consultation",
+      title: "One-on-One Consultation with Expert",
+      shortDescription: "Personal consultation to review your claim with medical expert",
+      features: ["Personal consultation with Dr. Bhalani", "Comprehensive claim review"],
+      basePriceInINR: 3499,
+      duration: "1-hour consultation",
+      category: "consultation",
+      icon: "users"
+    },
+    {
+      id: "7",
+      slug: "1151-claim",
+      title: "1151 Claim (VA Medical Malpractice)",
+      shortDescription: "Expert medical opinions for VA medical negligence claims",
+      features: ["VA treatment record analysis", "Medical negligence assessment"],
+      basePriceInINR: 7999,
+      duration: "10-14 business days",
+      category: "malpractice",
+      icon: "alert-triangle"
+    }
+  ];
+
+  const mockBlogPosts = [
+    {
+      id: "1",
+      slug: "nexus-and-rebuttal-letters-explained",
+      title: "Nexus and Rebuttal Letters: Your Key to VA Claim Success",
+      excerpt: "Understanding the difference between nexus and rebuttal letters and when you need each for your VA claim.",
+      category: "nexus-letters",
+      authorName: "Dr. Kishan Bhalani",
+      publishedAt: "SEPT 2025",
+      readTime: "6 min read"
+    },
+    {
+      id: "4",
+      slug: "understanding-1151-claims",
+      title: "Understanding 1151 Claims: When VA Medical Care Goes Wrong",
+      excerpt: "Learn about 38 U.S.C. § 1151 claims for compensation when VA medical treatment causes injury or worsens your condition.",
+      category: "1151-claims",
+      authorName: "Dr. Kishan Bhalani",
+      publishedAt: "OCT 2025",
+      readTime: "8 min read"
+    }
+  ];
 
   const getIconComponent = (iconName) => {
     const icons = {

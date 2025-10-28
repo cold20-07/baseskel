@@ -1,0 +1,16 @@
+2025-10-28 08:22:34,799 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 08:22:34,799 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 08:22:35,263 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 08:22:35,263 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 08:24:58,190 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 08:24:58,190 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 08:24:58,585 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 08:24:58,585 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 08:25:08,028 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /docs | Outcome: SUCCESS | PHI: False
+2025-10-28 08:25:08,028 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /docs | Outcome: SUCCESS | PHI: False
+2025-10-28 08:25:08,031 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 08:25:08,031 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 08:32:21,890 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 08:32:21,890 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 08:32:22,004 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 08:32:22,004 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
