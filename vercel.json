@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend/server.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "backend/server.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "backend/server.py"
+    }
+  ],
+  "env": {
+    "SUPABASE_URL": "https://demo-project.supabase.co",
+    "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.demo-key-for-testing",
+    "CORS_ORIGINS": "*",
+    "HIPAA_ENCRYPTION_KEY": "demo-encryption-key-change-in-production",
+    "ENVIRONMENT": "production",
+    "ALLOWED_HOSTS": "*"
+  }
+}
