@@ -1,1 +1,1 @@
-web: cd backend && python start_production.py
+web: cd backend && python deploy_server.py

@@ -78,3 +78,55 @@
 2025-10-28 23:06:03,936 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /openapi.json | Outcome: SUCCESS | PHI: False
 2025-10-28 23:06:04,040 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
 2025-10-28 23:06:04,040 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:37,607 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET / | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:37,607 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET / | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:37,956 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:37,956 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:40,518 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /health | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:40,518 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /health | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:40,520 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:40,520 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:43,078 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/ | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:43,078 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/ | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:43,086 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:43,086 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:45,641 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:45,641 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:45,644 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:45,644 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:48,183 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:48,183 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:48,191 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:48,191 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:50,764 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:50,764 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-28 23:08:50,779 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:08:50,779 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:29:54,932 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 23:29:54,932 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 23:29:55,298 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:29:55,298 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:29:57,347 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 23:29:57,347 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-28 23:29:57,348 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:29:57,348 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:29:59,397 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-28 23:29:59,397 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-28 23:29:59,397 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:29:59,397 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:30:01,463 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-28 23:30:01,463 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-28 23:30:01,497 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:30:01,497 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:30:03,546 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-28 23:30:03,546 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-28 23:30:03,546 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:30:03,546 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:31:16,346 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-28 23:31:16,346 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-28 23:31:16,465 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:31:16,465 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:38:34,167 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-28 23:38:34,167 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-28 23:38:34,324 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-28 23:38:34,324 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
