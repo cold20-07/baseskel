@@ -6,14 +6,15 @@ This version works without external database connections for testing
 from fastapi import FastAPI, APIRouter, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, EmailStr
-from typing import List, Optional
+from pydantic import BaseModel, EmailStr, Field
+from typing import List, Optional, Dict, Any
 import uuid
 from datetime import datetime, timezone
 import os
 import logging
 from pathlib import Path
 from dotenv import load_dotenv
+from enum import Enum
 
 # Load environment variables
 ROOT_DIR = Path(__file__).parent
@@ -100,6 +101,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Enums for service functionality
+class ServiceStatus(str, Enum):
+    AVAILABLE = "available"
+    BUSY = "busy"
+    UNAVAILABLE = "unavailable"
+
+class OrderStatus(str, Enum):
+    PENDING = "pending"
+    IN_PROGRESS = "in_progress"
+    UNDER_REVIEW = "under_review"
+    COMPLETED = "completed"
+    CANCELLED = "cancelled"
+
+class AppointmentStatus(str, Enum):
+    SCHEDULED = "scheduled"
+    CONFIRMED = "confirmed"
+    IN_PROGRESS = "in_progress"
+    COMPLETED = "completed"
+    CANCELLED = "cancelled"
+
 # Models
 class Service(BaseModel):
     id: str
@@ -113,6 +134,60 @@ class Service(BaseModel):
     category: str
     icon: str
     faqs: List[dict]
+
+class ServiceOrder(BaseModel):
+    id: str
+    service_id: str
+    service_title: str
+    customer_name: str
+    customer_email: str
+    customer_phone: Optional[str] = None
+    order_details: Dict[str, Any]
+    status: OrderStatus
+    total_amount: int
+    created_at: str
+    estimated_completion: str
+    notes: Optional[str] = None
+
+class ServiceOrderCreate(BaseModel):
+    service_id: str
+    customer_name: str = Field(..., min_length=2, max_length=100)
+    customer_email: EmailStr
+    customer_phone: Optional[str] = Field(None, pattern=r'^\+?[\d\s\-\(\)]{10,15}$')
+    order_details: Dict[str, Any] = Field(default_factory=dict)
+    notes: Optional[str] = Field(None, max_length=1000)
+
+class Appointment(BaseModel):
+    id: str
+    service_id: str
+    service_title: str
+    customer_name: str
+    customer_email: str
+    customer_phone: Optional[str] = None
+    appointment_date: str
+    appointment_time: str
+    duration_minutes: int
+    status: AppointmentStatus
+    meeting_link: Optional[str] = None
+    notes: Optional[str] = None
+    created_at: str
+
+class AppointmentCreate(BaseModel):
+    service_id: str
+    customer_name: str = Field(..., min_length=2, max_length=100)
+    customer_email: EmailStr
+    customer_phone: Optional[str] = Field(None, pattern=r'^\+?[\d\s\-\(\)]{10,15}$')
+    preferred_date: str = Field(..., description="YYYY-MM-DD format")
+    preferred_time: str = Field(..., description="HH:MM format")
+    notes: Optional[str] = Field(None, max_length=500)
+
+class ServiceAvailability(BaseModel):
+    service_id: str
+    service_title: str
+    status: ServiceStatus
+    next_available_date: Optional[str] = None
+    estimated_turnaround: str
+    current_queue_length: int
 
 class BlogPost(BaseModel):
     id: str
@@ -339,6 +414,56 @@ MOCK_BLOG_POSTS = [
     }
 ]
 
+# In-memory storage for orders and appointments (in production, use a database)
+MOCK_ORDERS = []
+MOCK_APPOINTMENTS = []
+
+# Service availability data
+SERVICE_AVAILABILITY = {
+    "nexus-rebuttal-letters": {
+        "status": ServiceStatus.AVAILABLE,
+        "next_available_date": "2025-11-05",
+        "estimated_turnaround": "7-10 business days",
+        "current_queue_length": 3
+    },
+    "public-dbqs": {
+        "status": ServiceStatus.AVAILABLE,
+        "next_available_date": "2025-11-03",
+        "estimated_turnaround": "5-7 business days",
+        "current_queue_length": 2
+    },
+    "aid-attendance": {
+        "status": ServiceStatus.AVAILABLE,
+        "next_available_date": "2025-11-10",
+        "estimated_turnaround": "10-14 business days",
+        "current_queue_length": 1
+    },
+    "cp-coaching": {
+        "status": ServiceStatus.AVAILABLE,
+        "next_available_date": "2025-10-29",
+        "estimated_turnaround": "Same day or next business day",
+        "current_queue_length": 0
+    },
+    "expert-consultation": {
+        "status": ServiceStatus.AVAILABLE,
+        "next_available_date": "2025-11-01",
+        "estimated_turnaround": "3-5 days",
+        "current_queue_length": 4
+    },
+    "record-review": {
+        "status": ServiceStatus.AVAILABLE,
+        "next_available_date": "2025-11-02",
+        "estimated_turnaround": "5-7 business days",
+        "current_queue_length": 2
+    },
+    "1151-claim": {
+        "status": ServiceStatus.AVAILABLE,
+        "next_available_date": "2025-11-12",
+        "estimated_turnaround": "10-14 business days",
+        "current_queue_length": 1
+    }
+}
+
 # Routes
 @api_router.get("/")
 async def root():
@@ -356,7 +481,7 @@ async def root():
 
 @api_router.get("/resources")
 async def get_available_resources():
-    """Get all available services and blog posts"""
+    """Get all available services, blog posts, and functionality"""
     return {
         "services": {
             "count": len(MOCK_SERVICES),
@@ -365,6 +490,25 @@ async def get_available_resources():
         "blog_posts": {
             "count": len(MOCK_BLOG_POSTS),
             "available": [{"slug": b["slug"], "title": b["title"]} for b in MOCK_BLOG_POSTS]
+        },
+        "functionality": {
+            "service_ordering": {
+                "check_availability": "/api/services/{slug}/availability",
+                "create_order": "POST /api/services/{slug}/order",
+                "view_orders": "/api/services/{slug}/orders",
+                "order_details": "/api/orders/{order_id}"
+            },
+            "appointments": {
+                "schedule": "POST /api/services/{slug}/appointment",
+                "view_appointments": "/api/services/{slug}/appointments",
+                "appointment_details": "/api/appointments/{appointment_id}",
+                "supported_services": ["expert-consultation", "cp-coaching"]
+            },
+            "service_specific": {
+                "nexus_templates": "/api/services/nexus-rebuttal-letters/templates",
+                "available_dbqs": "/api/services/public-dbqs/available",
+                "cp_preparation": "/api/services/cp-coaching/preparation-guide"
+            }
         },
         "usage": {
             "service_detail": "/api/services/{slug}",
@@ -439,13 +583,243 @@ async def create_contact(contact_data: ContactCreate, request: Request):
     
     return contact_obj
 
+# Service functionality endpoints
+@api_router.get("/services/{slug}/availability")
+async def get_service_availability(slug: str):
+    """Get availability information for a specific service"""
+    service = next((s for s in MOCK_SERVICES if s["slug"] == slug), None)
+    if not service:
+        raise HTTPException(status_code=404, detail="Service not found")
+    
+    availability = SERVICE_AVAILABILITY.get(slug, {
+        "status": ServiceStatus.AVAILABLE,
+        "next_available_date": "2025-11-01",
+        "estimated_turnaround": "5-7 business days",
+        "current_queue_length": 0
+    })
+    
+    return ServiceAvailability(
+        service_id=service["id"],
+        service_title=service["title"],
+        **availability
+    )
+
+@api_router.post("/services/{slug}/order", response_model=ServiceOrder)
+async def create_service_order(slug: str, order_data: ServiceOrderCreate):
+    """Create a new service order"""
+    service = next((s for s in MOCK_SERVICES if s["slug"] == slug), None)
+    if not service:
+        raise HTTPException(status_code=404, detail="Service not found")
+    
+    # Calculate estimated completion date
+    from datetime import timedelta
+    completion_date = datetime.now() + timedelta(days=10)  # Default 10 days
+    
+    order = ServiceOrder(
+        id=str(uuid.uuid4()),
+        service_id=service["id"],
+        service_title=service["title"],
+        customer_name=order_data.customer_name,
+        customer_email=order_data.customer_email,
+        customer_phone=order_data.customer_phone,
+        order_details=order_data.order_details,
+        status=OrderStatus.PENDING,
+        total_amount=service["basePriceInINR"],
+        created_at=datetime.now(timezone.utc).isoformat(),
+        estimated_completion=completion_date.isoformat(),
+        notes=order_data.notes
+    )
+    
+    MOCK_ORDERS.append(order.model_dump())
+    logger.info(f"New order created: {order.id} for service {service['title']}")
+    
+    return order
+
+@api_router.get("/services/{slug}/orders", response_model=List[ServiceOrder])
+async def get_service_orders(slug: str, customer_email: Optional[str] = Query(None)):
+    """Get orders for a specific service"""
+    service = next((s for s in MOCK_SERVICES if s["slug"] == slug), None)
+    if not service:
+        raise HTTPException(status_code=404, detail="Service not found")
+    
+    orders = [o for o in MOCK_ORDERS if o["service_id"] == service["id"]]
+    
+    if customer_email:
+        orders = [o for o in orders if o["customer_email"] == customer_email]
+    
+    return [ServiceOrder(**order) for order in orders]
+
+@api_router.get("/orders/{order_id}", response_model=ServiceOrder)
+async def get_order_details(order_id: str):
+    """Get details of a specific order"""
+    order = next((o for o in MOCK_ORDERS if o["id"] == order_id), None)
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    
+    return ServiceOrder(**order)
+
+@api_router.put("/orders/{order_id}/status")
+async def update_order_status(order_id: str, status: OrderStatus):
+    """Update order status (admin function)"""
+    order = next((o for o in MOCK_ORDERS if o["id"] == order_id), None)
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    
+    order["status"] = status
+    logger.info(f"Order {order_id} status updated to {status}")
+    
+    return {"message": "Order status updated successfully", "new_status": status}
+
+# Appointment functionality for consultation services
+@api_router.post("/services/{slug}/appointment", response_model=Appointment)
+async def schedule_appointment(slug: str, appointment_data: AppointmentCreate):
+    """Schedule an appointment for consultation services"""
+    service = next((s for s in MOCK_SERVICES if s["slug"] == slug), None)
+    if not service:
+        raise HTTPException(status_code=404, detail="Service not found")
+    
+    # Check if service supports appointments
+    consultation_services = ["expert-consultation", "cp-coaching"]
+    if slug not in consultation_services:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Service '{service['title']}' does not support appointment scheduling"
+        )
+    
+    appointment = Appointment(
+        id=str(uuid.uuid4()),
+        service_id=service["id"],
+        service_title=service["title"],
+        customer_name=appointment_data.customer_name,
+        customer_email=appointment_data.customer_email,
+        customer_phone=appointment_data.customer_phone,
+        appointment_date=appointment_data.preferred_date,
+        appointment_time=appointment_data.preferred_time,
+        duration_minutes=60,  # Default 1 hour
+        status=AppointmentStatus.SCHEDULED,
+        meeting_link=f"https://meet.drkishanbhalani.com/room/{str(uuid.uuid4())[:8]}",
+        notes=appointment_data.notes,
+        created_at=datetime.now(timezone.utc).isoformat()
+    )
+    
+    MOCK_APPOINTMENTS.append(appointment.model_dump())
+    logger.info(f"New appointment scheduled: {appointment.id} for {appointment.appointment_date}")
+    
+    return appointment
+
+@api_router.get("/services/{slug}/appointments", response_model=List[Appointment])
+async def get_service_appointments(slug: str, customer_email: Optional[str] = Query(None)):
+    """Get appointments for a specific service"""
+    service = next((s for s in MOCK_SERVICES if s["slug"] == slug), None)
+    if not service:
+        raise HTTPException(status_code=404, detail="Service not found")
+    
+    appointments = [a for a in MOCK_APPOINTMENTS if a["service_id"] == service["id"]]
+    
+    if customer_email:
+        appointments = [a for a in appointments if a["customer_email"] == customer_email]
+    
+    return [Appointment(**appointment) for appointment in appointments]
+
+@api_router.get("/appointments/{appointment_id}", response_model=Appointment)
+async def get_appointment_details(appointment_id: str):
+    """Get details of a specific appointment"""
+    appointment = next((a for a in MOCK_APPOINTMENTS if a["id"] == appointment_id), None)
+    if not appointment:
+        raise HTTPException(status_code=404, detail="Appointment not found")
+    
+    return Appointment(**appointment)
+
+@api_router.put("/appointments/{appointment_id}/status")
+async def update_appointment_status(appointment_id: str, status: AppointmentStatus):
+    """Update appointment status"""
+    appointment = next((a for a in MOCK_APPOINTMENTS if a["id"] == appointment_id), None)
+    if not appointment:
+        raise HTTPException(status_code=404, detail="Appointment not found")
+    
+    appointment["status"] = status
+    logger.info(f"Appointment {appointment_id} status updated to {status}")
+    
+    return {"message": "Appointment status updated successfully", "new_status": status}
+
+# Service-specific functionality
+@api_router.get("/services/nexus-rebuttal-letters/templates")
+async def get_nexus_templates():
+    """Get available nexus letter templates"""
+    return {
+        "templates": [
+            {
+                "id": "direct-nexus",
+                "name": "Direct Service Connection",
+                "description": "For conditions directly caused by military service",
+                "fields": ["condition", "service_events", "medical_evidence"]
+            },
+            {
+                "id": "secondary-nexus",
+                "name": "Secondary Service Connection",
+                "description": "For conditions caused by service-connected disabilities",
+                "fields": ["primary_condition", "secondary_condition", "medical_rationale"]
+            },
+            {
+                "id": "aggravation-nexus",
+                "name": "Aggravation Nexus",
+                "description": "For pre-existing conditions worsened by service",
+                "fields": ["pre_existing_condition", "aggravation_evidence", "timeline"]
+            }
+        ]
+    }
+
+@api_router.get("/services/public-dbqs/available")
+async def get_available_dbqs():
+    """Get list of available DBQ forms"""
+    return {
+        "dbq_forms": [
+            {"code": "21-0960A-1", "name": "Hearing Loss", "category": "Auditory"},
+            {"code": "21-0960A-2", "name": "Tinnitus", "category": "Auditory"},
+            {"code": "21-0960B-1", "name": "Hypertension", "category": "Cardiovascular"},
+            {"code": "21-0960C-1", "name": "PTSD", "category": "Mental Health"},
+            {"code": "21-0960C-2", "name": "Depression", "category": "Mental Health"},
+            {"code": "21-0960D-1", "name": "Diabetes", "category": "Endocrine"},
+            {"code": "21-0960E-1", "name": "Back Pain", "category": "Musculoskeletal"},
+            {"code": "21-0960F-1", "name": "Sleep Apnea", "category": "Respiratory"}
+        ]
+    }
+
+@api_router.get("/services/cp-coaching/preparation-guide")
+async def get_cp_preparation_guide():
+    """Get C&P exam preparation guide"""
+    return {
+        "preparation_tips": [
+            "Arrive 15 minutes early",
+            "Bring all relevant medical records",
+            "Be honest about your symptoms",
+            "Describe your worst days",
+            "Don't minimize your pain or limitations"
+        ],
+        "what_to_expect": [
+            "Physical examination",
+            "Review of medical history",
+            "Discussion of symptoms",
+            "Functional assessment",
+            "Questions about daily activities"
+        ],
+        "common_mistakes": [
+            "Downplaying symptoms",
+            "Not mentioning all conditions",
+            "Forgetting to bring records",
+            "Being unprepared for questions"
+        ]
+    }
+
 @api_router.get("/health")
 async def health_check():
     return {
         "status": "healthy",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "services_count": len(MOCK_SERVICES),
-        "blog_posts_count": len(MOCK_BLOG_POSTS)
+        "blog_posts_count": len(MOCK_BLOG_POSTS),
+        "active_orders": len(MOCK_ORDERS),
+        "scheduled_appointments": len(MOCK_APPOINTMENTS)
     }
 
 # Include the router in the main app
