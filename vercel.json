@@ -1,21 +1,17 @@
 {
   "version": 2,
-  "rewrites": [
+  "builds": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/backend/deploy_server"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/api/backend/deploy_server"
+      "src": "api/index.py",
+      "use": "@vercel/python"
     }
   ],
-  "functions": {
-    "backend/deploy_server.py": {
-      "maxDuration": 30,
-      "runtime": "@vercel/python"
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.py"
     }
-  },
+  ],
   "env": {
     "SUPABASE_URL": "https://demo-project.supabase.co",
     "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.demo-key-for-testing",
