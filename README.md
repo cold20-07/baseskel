@@ -275,7 +275,7 @@ git push -u origin main
 
 Features intentionally left out of MVP that can be added later:
 
-1. **Full Booking Funnel** (6-step wizard with date/time selection, file uploads, mock payment)
+1. **Full Booking Funnel** (6-step wizard with date/time selection, file uploads, payment processing)
 2. **Admin Dashboard** (read-only stats, appointments management, contacts CRM)
 3. **User Authentication** (JWT-based login/signup)
 4. **Real Payment Integration** (Stripe or similar)
@@ -301,7 +301,7 @@ Features intentionally left out of MVP that can be added later:
 ## 📝 Notes
 
 - All prices are in USD (US Dollars) with $ symbol
-- Mock data includes 7 services and 3 blog posts
+- Production data from Supabase database
 - Contact form submissions are stored in Supabase
 - No authentication required for MVP
 - All API routes use `/api` prefix for proper routing

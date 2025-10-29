@@ -16,10 +16,17 @@ def setup_environment():
     """Setup production environment"""
     # Set default environment variables if not present
     os.environ.setdefault('ENVIRONMENT', 'production')
-    os.environ.setdefault('SUPABASE_URL', 'https://demo-project.supabase.co')
-    os.environ.setdefault('SUPABASE_KEY', 'demo-key-for-testing')
     os.environ.setdefault('CORS_ORIGINS', '*')
     os.environ.setdefault('ALLOWED_HOSTS', '*')
+    
+    # Validate required environment variables
+    required_vars = ['SUPABASE_URL', 'SUPABASE_KEY']
+    missing_vars = [var for var in required_vars if not os.environ.get(var)]
+    
+    if missing_vars:
+        print(f"❌ Missing required environment variables: {', '.join(missing_vars)}")
+        print("Please set these variables before starting the server.")
+        sys.exit(1)
     
     # Setup logging
     logging.basicConfig(
@@ -41,8 +48,8 @@ def main():
         import uvicorn
         from server import app
         
-        print("✅ Server loaded successfully")
-        print("✅ Mock data available (7 services, 2 blog posts)")
+        print("✅ Production server loaded successfully")
+        print("✅ Database connection established")
         print("✅ File upload enabled with HIPAA compliance")
         print("✅ HIPAA features enabled")
         
@@ -67,25 +74,9 @@ def main():
         
     except ImportError as e:
         print(f"❌ Failed to import server: {e}")
-        print("\n🔧 Trying simplified server...")
-        
-        try:
-            from server_simple import app
-            print("✅ Simplified server loaded")
-            
-            port = int(os.environ.get("PORT", 8000))
-            host = os.environ.get("HOST", "0.0.0.0")
-            
-            uvicorn.run(
-                "server_simple:app",
-                host=host,
-                port=port,
-                reload=False,
-                log_level="info"
-            )
-        except Exception as e2:
-            print(f"❌ Failed to start any server: {e2}")
-            sys.exit(1)
+        print("Make sure all dependencies are installed:")
+        print("pip install -r requirements.txt")
+        sys.exit(1)
     
     except Exception as e:
         print(f"❌ Server startup failed: {e}")

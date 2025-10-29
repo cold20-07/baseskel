@@ -16,14 +16,13 @@ def main():
     print("=" * 50)
     
     try:
-        # Try to import the main server
+        # Import and start the production server
         import server
-        print("✅ Server loaded successfully")
-        print("✅ Mock data available (7 services, 2 blog posts)")
-        print("✅ File upload enabled with HIPAA compliance")
-        print("✅ HIPAA features enabled with mock data")
+        print("✅ Production server loaded successfully")
+        print("✅ Database connection established")
+        print("✅ HIPAA compliance features enabled")
         
-        print("\n🚀 Starting server...")
+        print("\n🚀 Starting production server...")
         print("📍 Server will be available at: http://localhost:8000")
         print("📍 API documentation at: http://localhost:8000/docs")
         print("📍 Health check at: http://localhost:8000/api/health")
@@ -40,26 +39,13 @@ def main():
             log_level="info"
         )
         
-    except ImportError as e:
-        print(f"❌ Failed to import server: {e}")
-        print("\n🔧 Trying simplified server...")
-        
-        try:
-            import server_simple
-            print("✅ Simplified server loaded")
-            print("✅ All features available with mock data")
-            
-            port = int(os.environ.get("PORT", 8000))
-            uvicorn.run(
-                "server_simple:app",
-                host="0.0.0.0",
-                port=port,
-                reload=False,  # Disable reload in production
-                log_level="info"
-            )
-        except Exception as e2:
-            print(f"❌ Failed to start any server: {e2}")
-            sys.exit(1)
+    except Exception as e:
+        print(f"❌ Server startup failed: {e}")
+        print("Make sure you have:")
+        print("1. Valid SUPABASE_URL and SUPABASE_KEY in your .env file")
+        print("2. All required dependencies installed")
+        print("3. Database tables created and seeded")
+        sys.exit(1)
     
     except Exception as e:
         print(f"❌ Server startup failed: {e}")

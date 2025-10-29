@@ -5,10 +5,7 @@ from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response
-try:
-    from supabase import create_client, Client
-except ImportError:
-    from mock_supabase import create_client, MockSupabaseClient as Client
+from supabase import create_client, Client
 import os
 import logging
 from pathlib import Path
@@ -48,31 +45,24 @@ except ImportError as e:
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# Supabase connection (with mock support)
+# Supabase connection (production only)
+supabase_url = os.environ.get('SUPABASE_URL')
+supabase_key = os.environ.get('SUPABASE_KEY')
+
+if not supabase_url or not supabase_key:
+    raise ValueError("SUPABASE_URL and SUPABASE_KEY environment variables are required for production")
+
+if 'demo-project' in supabase_url or 'placeholder' in supabase_url:
+    raise ValueError("Production requires a real Supabase project URL, not a placeholder")
+
 try:
-    supabase_url = os.environ.get('SUPABASE_URL', 'https://demo-project.supabase.co')
-    supabase_key = os.environ.get('SUPABASE_KEY', 'demo-key')
-    
     supabase: Client = create_client(supabase_url, supabase_key)
     SUPABASE_AVAILABLE = True
-    
-    if 'demo-project' in supabase_url:
-        print("🎭 Using mock Supabase client for testing")
-    else:
-        print("✅ Connected to real Supabase instance")
-        
+    print("✅ Connected to Supabase instance")
 except Exception as e:
-    print(f"⚠️  Supabase connection failed: {e}")
-    # Try mock as fallback
-    try:
-        from mock_supabase import create_client, MockSupabaseClient as Client
-        supabase = create_client('https://demo-project.supabase.co', 'demo-key')
-        SUPABASE_AVAILABLE = True
-        print("🎭 Fallback to mock Supabase client")
-    except Exception as e2:
-        print(f"❌ Mock Supabase also failed: {e2}")
-        supabase = None
-        SUPABASE_AVAILABLE = False
+    print(f"❌ Supabase connection failed: {e}")
+    SUPABASE_AVAILABLE = False
+    raise e
 
 # Initialize HIPAA compliance components (if available)
 if HIPAA_AVAILABLE and SUPABASE_AVAILABLE and supabase:
@@ -205,129 +195,7 @@ def require_phi_access(user_role: str = "patient"):
     return decorator
 
 
-# ===== MOCK DATA =====
-def get_mock_services():
-    return [
-        {
-            "id": "1",
-            "slug": "nexus-rebuttal-letters",
-            "title": "Nexus & Rebuttal Letters",
-            "shortDescription": "Comprehensive medical opinions for claims and appeals",
-            "fullDescription": "Professional nexus and rebuttal letters that establish clear connections between your military service and medical conditions, or challenge unfavorable VA decisions.",
-            "features": ["Nexus opinion letters", "Rebuttal to VA denials", "Direct/secondary/aggravation analysis", "Clear medical rationale", "Rush service: +$500 USD (36-48 hours)"],
-            "basePriceInUSD": 1499,
-            "duration": "7-10 business days",
-            "category": "nexus-letter",
-            "icon": "file-text",
-            "faqs": [{"question": "What's the difference between nexus and rebuttal letters?", "answer": "Nexus letters establish the connection between military service and a condition for initial claims. Rebuttal letters challenge VA decisions by providing contrary medical evidence and opinions."}]
-        },
-        {
-            "id": "2",
-            "slug": "public-dbqs",
-            "title": "DBQs",
-            "shortDescription": "Standardized disability questionnaires for VA claims",
-            "fullDescription": "Disability Benefits Questionnaires (DBQs) are standardized medical examination forms used by the VA to evaluate disability claims.",
-            "features": ["Latest public VA DBQs", "Objective findings", "Functional impact", "Rush service: +$50 USD (36-48 hours)"],
-            "basePriceInUSD": 249,
-            "duration": "5-7 business days",
-            "category": "dbq",
-            "icon": "clipboard",
-            "faqs": [{"question": "Do you complete VA DBQs?", "answer": "Yes, we complete public DBQs that are currently accepted by the VA for various conditions."}]
-        },
-        {
-            "id": "3",
-            "slug": "aid-attendance",
-            "title": "Aid & Attendance (21-2680)",
-            "shortDescription": "Enhanced pension benefits for veterans needing assistance",
-            "fullDescription": "Aid and Attendance is a benefit available to veterans and surviving spouses who require the regular assistance of another person.",
-            "features": ["Physician evaluation", "ADL documentation", "When clinically indicated", "Rush service: +$500 USD (36-48 hours)"],
-            "basePriceInUSD": 1999,
-            "duration": "10-14 business days",
-            "category": "aid-attendance",
-            "icon": "heart-pulse",
-            "faqs": [{"question": "Can you help with Aid & Attendance?", "answer": "Yes, we provide complete physician evaluations and documentation for VA Form 21-2680."}]
-        },
-        {
-            "id": "4",
-            "slug": "cp-coaching",
-            "title": "C&P Coaching",
-            "shortDescription": "Preparation for compensation and pension examinations",
-            "fullDescription": "Prepare for your C&P exam with expert coaching. We help you understand what to expect, how to accurately report your symptoms, and provide tips to ensure your disabilities are properly documented.",
-            "features": ["What to expect", "Accurate symptom reporting", "Logbooks & lay tips"],
-            "basePriceInUSD": 29,
-            "duration": "Same day or next business day",
-            "category": "coaching",
-            "icon": "users",
-            "faqs": [{"question": "What is C&P coaching?", "answer": "C&P coaching prepares you for your Compensation and Pension exam, helping you understand the process and communicate your condition effectively."}]
-        },
-        {
-            "id": "5",
-            "slug": "expert-consultation",
-            "title": "One-on-One Consultation with Expert",
-            "shortDescription": "Personal consultation to review your claim with medical expert",
-            "fullDescription": "Schedule a comprehensive one-on-one consultation with Dr. Kishan Bhalani to review your VA claim, discuss your medical conditions, and receive personalized guidance.",
-            "features": ["Personal consultation with Dr. Bhalani", "Comprehensive claim review", "Medical condition assessment", "Personalized recommendations"],
-            "basePriceInUSD": 249,
-            "duration": "1-hour consultation scheduled within 3-5 days",
-            "category": "consultation",
-            "icon": "users",
-            "faqs": [{"question": "How does the consultation work?", "answer": "You'll have a scheduled one-on-one video or phone consultation with Dr. Kishan Bhalani to discuss your claim, medical conditions, and receive personalized guidance."}]
-        },
-        {
-            "id": "6",
-            "slug": "record-review",
-            "title": "Record Review",
-            "shortDescription": "Professional analysis of your medical documentation",
-            "fullDescription": "Our medical professionals review your service and medical records to identify conditions eligible for VA compensation, build a comprehensive timeline, and prepare targeted questions for your providers.",
-            "features": ["Service/med records synthesis", "Timeline build", "Provider question set"],
-            "basePriceInUSD": 99,
-            "duration": "5-7 business days",
-            "category": "review",
-            "icon": "file-search",
-            "faqs": [{"question": "What records should I provide?", "answer": "Please provide your service treatment records, VA medical records, and any private medical records related to your conditions."}]
-        },
-        {
-            "id": "7",
-            "slug": "1151-claim",
-            "title": "1151 Claim (VA Medical Malpractice)",
-            "shortDescription": "Expert medical opinions for VA medical negligence claims",
-            "fullDescription": "Specialized medical documentation for 38 U.S.C. § 1151 claims when veterans are injured or their conditions worsen due to VA medical care.",
-            "features": ["VA treatment record analysis", "Medical negligence assessment", "Causation nexus opinions", "Standard of care evaluation"],
-            "basePriceInUSD": 1999,
-            "duration": "10-14 business days",
-            "category": "malpractice",
-            "icon": "alert-triangle",
-            "faqs": [{"question": "What is a 1151 claim?", "answer": "A 1151 claim is filed when a veteran believes they were injured or their condition worsened due to VA medical care negligence, surgical errors, medication mistakes, or other treatment-related harm."}]
-        }
-    ]
 
-def get_mock_blog_posts():
-    return [
-        {
-            "id": "1",
-            "slug": "nexus-and-rebuttal-letters-explained",
-            "title": "Nexus and Rebuttal Letters: Your Key to VA Claim Success",
-            "excerpt": "Understanding the difference between nexus and rebuttal letters and when you need each for your VA claim.",
-            "contentHTML": "<h2>Understanding Nexus and Rebuttal Letters</h2><p>Both nexus and rebuttal letters are crucial medical documents in the VA claims process.</p>",
-            "category": "nexus-letters",
-            "tags": ["nexus", "rebuttal", "medical opinion"],
-            "authorName": "Dr. Kishan Bhalani",
-            "publishedAt": "SEPT 2025",
-            "readTime": "6 min read"
-        },
-        {
-            "id": "2",
-            "slug": "understanding-1151-claims",
-            "title": "Understanding 1151 Claims: When VA Medical Care Goes Wrong",
-            "excerpt": "Learn about 38 U.S.C. § 1151 claims for compensation when VA medical treatment causes injury or worsens your condition.",
-            "contentHTML": "<h2>What is a 1151 Claim?</h2><p>A 1151 claim allows veterans to seek compensation when they are injured due to VA medical care.</p>",
-            "category": "1151-claims",
-            "tags": ["1151 claim", "VA malpractice"],
-            "authorName": "Dr. Kishan Bhalani",
-            "publishedAt": "OCT 2025",
-            "readTime": "8 min read"
-        }
-    ]
 
 # ===== MODELS =====
 class Service(BaseModel):
@@ -400,19 +268,21 @@ async def api_health_check():
 @api_router.get("/services", response_model=List[Service])
 async def get_services():
     if not SUPABASE_AVAILABLE or not supabase:
-        return get_mock_services()
+        raise HTTPException(status_code=503, detail="Database service unavailable")
     
     try:
         response = supabase.table('services').select('*').execute()
         return response.data
     except Exception as e:
         logger.error(f"Error fetching services: {e}")
-        # Return mock data as fallback
-        return get_mock_services()
+        raise HTTPException(status_code=500, detail="Failed to fetch services")
 
 
 @api_router.get("/services/{slug}", response_model=Service)
 async def get_service_by_slug(slug: str):
+    if not SUPABASE_AVAILABLE or not supabase:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         response = supabase.table('services').select('*').eq('slug', slug).execute()
         if not response.data:
@@ -422,12 +292,7 @@ async def get_service_by_slug(slug: str):
         raise
     except Exception as e:
         logger.error(f"Error fetching service {slug}: {e}")
-        # Try mock data as fallback
-        mock_services = get_mock_services()
-        service = next((s for s in mock_services if s["slug"] == slug), None)
-        if service:
-            return service
-        raise HTTPException(status_code=404, detail="Service not found")
+        raise HTTPException(status_code=500, detail="Failed to fetch service")
 
 
 @api_router.get("/blog", response_model=List[BlogPost])
@@ -436,6 +301,9 @@ async def get_blog_posts(
     q: Optional[str] = Query(None),
     limit: int = Query(20, le=100)
 ):
+    if not SUPABASE_AVAILABLE or not supabase:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         query = supabase.table('blog_posts').select('*')
         
@@ -451,20 +319,14 @@ async def get_blog_posts(
         return response.data
     except Exception as e:
         logger.error(f"Error fetching blog posts: {e}")
-        # Return mock data as fallback
-        posts = get_mock_blog_posts()
-        
-        if category:
-            posts = [p for p in posts if p["category"] == category]
-        
-        if q:
-            posts = [p for p in posts if q.lower() in p["title"].lower() or q.lower() in p["excerpt"].lower()]
-        
-        return posts[:limit]
+        raise HTTPException(status_code=500, detail="Failed to fetch blog posts")
 
 
 @api_router.get("/blog/{slug}", response_model=BlogPost)
 async def get_blog_post(slug: str):
+    if not SUPABASE_AVAILABLE or not supabase:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         response = supabase.table('blog_posts').select('*').eq('slug', slug).execute()
         if not response.data:
@@ -474,12 +336,7 @@ async def get_blog_post(slug: str):
         raise
     except Exception as e:
         logger.error(f"Error fetching blog post {slug}: {e}")
-        # Try mock data as fallback
-        mock_posts = get_mock_blog_posts()
-        post = next((p for p in mock_posts if p["slug"] == slug), None)
-        if post:
-            return post
-        raise HTTPException(status_code=404, detail="Blog post not found")
+        raise HTTPException(status_code=500, detail="Failed to fetch blog post")
 
 
 @api_router.post("/contact", response_model=Contact)

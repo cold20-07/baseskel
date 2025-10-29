@@ -22,8 +22,8 @@ SERVICES = [
             "Nexus opinion letters",
             "Rebuttal to VA denials",
             "Direct/secondary/aggravation analysis",
-            "            "Clear medical rationale",
-            "Rush service: +$500 USD (36-48 hours)""
+            "Clear medical rationale",
+            "Rush service: +$500 USD (36-48 hours)"
         ],
         "basePriceInUSD": 1499,
         "duration": "7-10 business days",
@@ -53,8 +53,8 @@ SERVICES = [
         "features": [
             "Latest public VA DBQs",
             "Objective findings",
-            "            "Functional impact",
-            "Rush service: +$50 USD (36-48 hours)""
+            "Functional impact",
+            "Rush service: +$50 USD (36-48 hours)"
         ],
         "basePriceInUSD": 249,
         "duration": "5-7 business days",

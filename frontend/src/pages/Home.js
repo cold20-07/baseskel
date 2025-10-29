@@ -22,9 +22,8 @@ const Home = () => {
         setBlogPosts(blogRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
-        // Fallback to mock data when backend is unavailable
-        setServices(mockServices.slice(0, 4));
-        setBlogPosts(mockBlogPosts);
+        setServices([]);
+        setBlogPosts([]);
       } finally {
         setLoading(false);
       }
@@ -32,76 +31,7 @@ const Home = () => {
     fetchData();
   }, []);
 
-  // Mock data as fallback
-  const mockServices = [
-    {
-      id: "1",
-      slug: "nexus-rebuttal-letters",
-      title: "Nexus Letters",
-      shortDescription: "Professional nexus letters for service connection",
-      features: ["Professional nexus opinion letters", "Up to 4 claims per letter", "Direct, secondary, and aggravation analysis", "Rush service: +$500 USD (36-48 hours)"],
-      basePriceInUSD: 1500,
-      duration: "7-10 business days",
-      category: "nexus-letter",
-      icon: "file-text"
-    },
-    {
-      id: "2",
-      slug: "public-dbqs",
-      title: "DBQs",
-      shortDescription: "Standardized disability questionnaires",
-      features: ["VA-standardized DBQ forms", "Condition-specific questionnaires", "Medical professional completion", "Rush service: +$50 USD (36-48 hours)"],
-      basePriceInUSD: 250,
-      duration: "5-7 business days",
-      category: "dbq",
-      icon: "clipboard"
-    },
-    {
-      id: "5",
-      slug: "expert-consultation",
-      title: "Telehealth Consultation",
-      shortDescription: "Virtual consultation with medical expert",
-      features: ["Personal consultation with medical expert", "Comprehensive claim review and analysis", "Medical condition assessment and guidance"],
-      basePriceInUSD: 250,
-      duration: "1-hour consultation",
-      category: "consultation",
-      icon: "users"
-    },
-    {
-      id: "7",
-      slug: "1151-claim",
-      title: "1151 Claim (VA Medical Malpractice)",
-      shortDescription: "Expert medical opinions for VA medical negligence claims",
-      features: ["VA treatment record analysis", "Medical negligence assessment"],
-      basePriceInUSD: 1999,
-      duration: "10-14 business days",
-      category: "malpractice",
-      icon: "alert-triangle"
-    }
-  ];
 
-  const mockBlogPosts = [
-    {
-      id: "1",
-      slug: "nexus-and-rebuttal-letters-explained",
-      title: "Nexus and Rebuttal Letters: Your Key to VA Claim Success",
-      excerpt: "Understanding the difference between nexus and rebuttal letters and when you need each for your VA claim.",
-      category: "nexus-letters",
-      authorName: "Military Disability Nexus",
-      publishedAt: "SEPT 2025",
-      readTime: "6 min read"
-    },
-    {
-      id: "4",
-      slug: "understanding-1151-claims",
-      title: "Understanding 1151 Claims: When VA Medical Care Goes Wrong",
-      excerpt: "Learn about 38 U.S.C. § 1151 claims for compensation when VA medical treatment causes injury or worsens your condition.",
-      category: "1151-claims",
-      authorName: "Military Disability Nexus",
-      publishedAt: "OCT 2025",
-      readTime: "8 min read"
-    }
-  ];
 
   const getIconComponent = (iconName) => {
     const icons = {
@@ -188,6 +118,10 @@ const Home = () => {
             <div className="text-center py-12">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto" />
             </div>
+          ) : services.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="text-slate-600">Services will be available soon</div>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {services.map((service) => {
@@ -260,8 +194,13 @@ const Home = () => {
             <p className="text-lg text-slate-600">Guides and updates to help with your claim</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
+          {blogPosts.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="text-slate-600">Blog posts will be available soon</div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {blogPosts.map((post) => (
               <Link
                 key={post.id}
                 to={`/blog/${post.slug}`}
@@ -282,7 +221,8 @@ const Home = () => {
                 </div>
               </Link>
             ))}
-          </div>
+            </div>
+          )}
 
           <div className="text-center mt-10">
             <Link

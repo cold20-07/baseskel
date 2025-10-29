@@ -17,182 +17,7 @@ const ServiceDetail = () => {
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Mock services data as fallback
-  const mockServices = {
-    "nexus-rebuttal-letters": {
-      id: "1",
-      slug: "nexus-rebuttal-letters",
-      title: "Nexus Letters",
-      shortDescription: "Professional nexus letters for service connection",
-      fullDescription: "Professional nexus letters for establishing service connection of your medical conditions to military service. Our comprehensive service provides detailed medical opinions linking your current disabilities to your military service, supporting your VA disability claims with expert medical documentation.",
-      features: [
-        "Professional nexus opinion letters",
-        "Up to 4 claims per letter",
-        "Direct, secondary, and aggravation analysis",
-        "Clear medical rationale and evidence review",
-        "Professional formatting for VA submission",
-        "Rush service: +$500 USD (36-48 hours)"
-      ],
-      basePriceInUSD: 1500,
-      duration: "7-10 business days",
-      category: "nexus-letter",
-      icon: "file-text",
-      faqs: [
-        {
-          question: "What's the difference between nexus and rebuttal letters?",
-          answer: "Nexus letters establish the connection between military service and a condition for initial claims. Rebuttal letters challenge VA decisions by providing contrary medical evidence and opinions."
-        },
-        {
-          question: "Can you help with both initial claims and appeals?",
-          answer: "Yes, we provide nexus letters for initial claims and rebuttal letters to challenge unfavorable VA decisions in appeals."
-        }
-      ]
-    },
-    "public-dbqs": {
-      id: "2",
-      slug: "public-dbqs",
-      title: "DBQs",
-      shortDescription: "Standardized disability questionnaires",
-      fullDescription: "Comprehensive Disability Benefits Questionnaires (DBQs) completed by qualified medical professionals. These standardized forms help establish the severity and service connection of your medical conditions, providing the VA with detailed medical evidence in their preferred format.",
-      features: [
-        "VA-standardized DBQ forms",
-        "Condition-specific questionnaires",
-        "Medical professional completion",
-        "Evidence-based assessments",
-        "Ready for VA submission",
-        "Rush service: +$50 USD (36-48 hours)"
-      ],
-      basePriceInUSD: 250,
-      duration: "5-7 business days",
-      category: "dbq",
-      icon: "clipboard",
-      faqs: [
-        {
-          question: "Do you complete VA DBQs?",
-          answer: "Yes, we complete public DBQs that are currently accepted by the VA for various conditions."
-        }
-      ]
-    },
-    "aid-attendance": {
-      id: "3",
-      slug: "aid-attendance",
-      title: "Aid & Attendance (21-2680)",
-      shortDescription: "Enhanced pension benefits documentation",
-      fullDescription: "Specialized medical evaluations for Aid & Attendance benefits, helping veterans and surviving spouses qualify for enhanced pension payments. Our comprehensive assessment covers activities of daily living, mobility limitations, and care requirements.",
-      features: [
-        "Form 21-2680 completion",
-        "Activities of daily living assessment",
-        "Mobility and care requirement evaluation",
-        "Physician examination and documentation",
-        "Enhanced pension qualification support",
-        "Rush service: +$500 USD (36-48 hours)"
-      ],
-      basePriceInUSD: 2000,
-      duration: "10-14 business days",
-      category: "aid-attendance",
-      icon: "heart-pulse",
-      faqs: [
-        {
-          question: "Can you help with Aid & Attendance?",
-          answer: "Yes, we provide complete physician evaluations and documentation for VA Form 21-2680."
-        }
-      ]
-    },
-    "cp-coaching": {
-      id: "4",
-      slug: "cp-coaching",
-      title: "C&P Coaching",
-      shortDescription: "Preparation for compensation and pension examinations",
-      fullDescription: "Prepare for your C&P exam with expert coaching. We help you understand what to expect, how to accurately report your symptoms, and provide tips to ensure your disabilities are properly documented.",
-      features: [
-        "What to expect",
-        "Accurate symptom reporting",
-        "Logbooks & lay tips"
-      ],
-      basePriceInUSD: 29,
-      duration: "Same day or next business day",
-      category: "coaching",
-      icon: "users",
-      faqs: [
-        {
-          question: "What is C&P coaching?",
-          answer: "C&P coaching prepares you for your Compensation and Pension exam, helping you understand the process and communicate your condition effectively."
-        }
-      ]
-    },
-    "expert-consultation": {
-      id: "5",
-      slug: "expert-consultation",
-      title: "One-on-One Consultation with Expert",
-      shortDescription: "Personal consultation to review your claim with medical expert",
-      fullDescription: "Schedule a comprehensive one-on-one consultation with our medical expert to review your VA claim, discuss your medical conditions, and receive personalized guidance on strengthening your case. This direct consultation provides expert insights tailored to your specific situation.",
-      features: [
-        "Personal consultation with medical expert",
-        "Comprehensive claim review",
-        "Medical condition assessment",
-        "Personalized recommendations"
-      ],
-      basePriceInUSD: 249,
-      duration: "1-hour consultation scheduled within 3-5 days",
-      category: "consultation",
-      icon: "users",
-      faqs: [
-        {
-          question: "How does the consultation work?",
-          answer: "You'll have a scheduled one-on-one video or phone consultation with our medical expert to discuss your claim, medical conditions, and receive personalized guidance."
-        }
-      ]
-    },
-    "record-review": {
-      id: "6",
-      slug: "record-review",
-      title: "Record Review",
-      shortDescription: "Professional analysis of your medical documentation",
-      fullDescription: "Our medical professionals review your service and medical records to identify conditions eligible for VA compensation, build a comprehensive timeline, and prepare targeted questions for your providers.",
-      features: [
-        "Service/med records synthesis",
-        "Timeline build",
-        "Provider question set"
-      ],
-      basePriceInUSD: 99,
-      duration: "5-7 business days",
-      category: "review",
-      icon: "file-search",
-      faqs: [
-        {
-          question: "What records should I provide?",
-          answer: "Please provide your service treatment records, VA medical records, and any private medical records related to your conditions."
-        }
-      ]
-    },
-    "1151-claim": {
-      id: "7",
-      slug: "1151-claim",
-      title: "1151 Claim (VA Medical Malpractice)",
-      shortDescription: "Expert medical opinions for VA medical negligence claims",
-      fullDescription: "Specialized medical documentation for 38 U.S.C. § 1151 claims when veterans are injured or their conditions worsen due to VA medical care. Our expert analysis helps establish negligence and causation for these complex claims requiring higher burden of proof.",
-      features: [
-        "VA treatment record analysis",
-        "Medical negligence assessment",
-        "Causation nexus opinions",
-        "Standard of care evaluation"
-      ],
-      basePriceInUSD: 1999,
-      duration: "10-14 business days",
-      category: "malpractice",
-      icon: "alert-triangle",
-      faqs: [
-        {
-          question: "What is a 1151 claim?",
-          answer: "A 1151 claim is filed when a veteran believes they were injured or their condition worsened due to VA medical care negligence, surgical errors, medication mistakes, or other treatment-related harm."
-        },
-        {
-          question: "How is this different from a regular VA claim?",
-          answer: "1151 claims require proving VA negligence and deviation from medical standards, not just service connection. They have a higher burden of proof but can provide compensation even for non-service-connected conditions."
-        }
-      ]
-    }
-  };
+
 
   useEffect(() => {
     const fetchService = async () => {
@@ -201,11 +26,7 @@ const ServiceDetail = () => {
         setService(response.data);
       } catch (error) {
         console.error('Error fetching service:', error);
-        // Fallback to mock data when backend is unavailable
-        const mockService = mockServices[slug];
-        if (mockService) {
-          setService(mockService);
-        }
+        setService(null);
       } finally {
         setLoading(false);
       }
@@ -226,9 +47,18 @@ const ServiceDetail = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Service not found</h2>
-          <Link to="/services" className="text-teal-600 hover:text-teal-700">
-            Back to Services
-          </Link>
+          <p className="text-slate-600 mb-4">The requested service could not be loaded.</p>
+          <div className="space-x-4">
+            <Link to="/services" className="text-teal-600 hover:text-teal-700">
+              Back to Services
+            </Link>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="text-slate-600 hover:text-slate-700"
+            >
+              Try Again
+            </button>
+          </div>
         </div>
       </div>
     );

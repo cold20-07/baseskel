@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Award, CheckCircle, Shield, ArrowRight } from 'lucide-react';
 import axios from 'axios';
-import DataSourceDebug from '../components/DataSourceDebug';
+
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -23,9 +23,8 @@ const Services = () => {
       } catch (error) {
         console.error('Error fetching services:', error);
         setApiError(error.message);
-        // Fallback to mock data when backend is unavailable
-        setServices(mockServices);
-        setDataSource('Mock');
+        setServices([]);
+        setDataSource('Error');
       } finally {
         setLoading(false);
       }
@@ -33,86 +32,7 @@ const Services = () => {
     fetchServices();
   }, []);
 
-  // Mock services data as fallback
-  const mockServices = [
-    {
-      id: "1",
-      slug: "nexus-rebuttal-letters",
-      title: "Nexus Letters",
-      shortDescription: "Professional nexus letters for service connection",
-      features: ["Professional nexus opinion letters", "Up to 4 claims per letter", "Direct, secondary, and aggravation analysis", "Clear medical rationale and evidence review", "Professional formatting for VA submission", "Rush service: +$500 USD (36-48 hours)"],
-      basePriceInUSD: 1500,
-      duration: "7-10 business days",
-      category: "nexus-letter",
-      icon: "file-text"
-    },
-    {
-      id: "2",
-      slug: "public-dbqs",
-      title: "DBQs",
-      shortDescription: "Standardized disability questionnaires",
-      features: ["VA-standardized DBQ forms", "Condition-specific questionnaires", "Medical professional completion", "Evidence-based assessments", "Ready for VA submission", "Rush service: +$50 USD (36-48 hours)"],
-      basePriceInUSD: 250,
-      duration: "5-7 business days",
-      category: "dbq",
-      icon: "clipboard"
-    },
-    {
-      id: "3",
-      slug: "aid-attendance",
-      title: "Aid & Attendance (21-2680)",
-      shortDescription: "Enhanced pension benefits documentation",
-      features: ["Form 21-2680 completion", "Activities of daily living assessment", "Mobility and care requirement evaluation", "Physician examination and documentation", "Enhanced pension qualification support", "Rush service: +$500 USD (36-48 hours)"],
-      basePriceInUSD: 2000,
-      duration: "10-14 business days",
-      category: "aid-attendance",
-      icon: "heart-pulse"
-    },
-    {
-      id: "4",
-      slug: "cp-coaching",
-      title: "C&P Coaching",
-      shortDescription: "Preparation for compensation and pension examinations",
-      features: ["What to expect", "Accurate symptom reporting", "Logbooks & lay tips"],
-      basePriceInUSD: 29,
-      duration: "Same day or next business day",
-      category: "coaching",
-      icon: "users"
-    },
-    {
-      id: "5",
-      slug: "expert-consultation",
-      title: "One-on-One Consultation with Expert",
-      shortDescription: "Personal consultation to review your claim with medical expert",
-      features: ["Personal consultation with medical expert", "Comprehensive claim review", "Medical condition assessment", "Personalized recommendations"],
-      basePriceInUSD: 249,
-      duration: "1-hour consultation scheduled within 3-5 days",
-      category: "consultation",
-      icon: "users"
-    },
-    {
-      id: "6",
-      slug: "record-review",
-      title: "Record Review",
-      shortDescription: "Professional analysis of your medical documentation (unlimited pages)",
-      features: ["Unlimited pages review", "Service/med records synthesis", "Timeline build", "Provider question set"],
-      basePriceInUSD: 99,
-      duration: "5-7 business days",
-      category: "review",
-      icon: "file-search"
-    },
-    {
-      id: "7",
-      slug: "1151-claim",
-      title: "1151 Claim (VA Medical Malpractice)",
-      shortDescription: "Expert medical opinions for VA medical negligence claims",
-      features: ["VA treatment record analysis", "Medical negligence assessment", "Causation nexus opinions", "Standard of care evaluation"],
-      basePriceInUSD: 1999,
-      duration: "10-14 business days",
-      category: "malpractice",
-      icon: "alert-triangle"
-    }
-  ];
+
 
   const getIconComponent = (iconName) => {
     const icons = {
@@ -129,11 +49,6 @@ const Services = () => {
 
   return (
     <div className="bg-slate-50 min-h-screen">
-      <DataSourceDebug 
-        dataSource={dataSource} 
-        apiUrl={`${API}/services`}
-        error={apiError}
-      />
       {/* Header */}
       <section className="bg-gradient-to-br from-teal-600 to-emerald-600 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -150,6 +65,23 @@ const Services = () => {
           {loading ? (
             <div className="text-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto" />
+            </div>
+          ) : apiError ? (
+            <div className="text-center py-20">
+              <div className="text-red-600 mb-4">Unable to load services</div>
+              <div className="text-slate-600">{apiError}</div>
+              <div className="mt-4">
+                <button 
+                  onClick={() => window.location.reload()} 
+                  className="bg-teal-600 text-white px-6 py-2 rounded-full hover:bg-teal-700"
+                >
+                  Try Again
+                </button>
+              </div>
+            </div>
+          ) : services.length === 0 ? (
+            <div className="text-center py-20">
+              <div className="text-slate-600">No services available at this time</div>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
