@@ -10,11 +10,12 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 import os
+import uuid
 from datetime import datetime
 
 # Create the main app
 app = FastAPI(
-    title="Dr. Kishan Bhalani - Medical Documentation API",
+    title="Military Disability Nexus - Medical Documentation API",
     description="Medical documentation services for veterans",
     version="1.0.0"
 )
@@ -65,17 +66,18 @@ MOCK_SERVICES = [
     {
         "id": "1",
         "slug": "nexus-rebuttal-letters",
-        "title": "Nexus & Rebuttal Letters",
-        "shortDescription": "Comprehensive medical opinions for claims and appeals",
-        "fullDescription": "Professional nexus and rebuttal letters combining initial claim support with appeal expertise. Our comprehensive service covers both nexus opinion letters for establishing service connection and rebuttal letters to counter VA denials, providing complete medical documentation support throughout your claim lifecycle.",
-        "price": "₹4,999",
+        "title": "Nexus Letters",
+        "shortDescription": "Professional nexus letters for service connection",
+        "fullDescription": "Professional nexus letters for establishing service connection of your medical conditions to military service. Our comprehensive service provides detailed medical opinions linking your current disabilities to your military service, supporting your VA disability claims with expert medical documentation.",
+        "price": "$1,500",
         "duration": "7-10 business days",
         "features": [
-            "Nexus opinion letters for service connection",
-            "Rebuttal letters for VA denials",
+            "Professional nexus opinion letters",
+            "Up to 4 claims per letter",
             "Direct, secondary, and aggravation analysis",
             "Clear medical rationale and evidence review",
-            "Professional formatting for VA submission"
+            "Professional formatting for VA submission",
+            "Rush service: +$500 USD (36-48 hours)"
         ],
         "icon": "FileText",
         "category": "documentation"
@@ -83,17 +85,18 @@ MOCK_SERVICES = [
     {
         "id": "2",
         "slug": "public-dbqs",
-        "title": "Public DBQs",
+        "title": "DBQs",
         "shortDescription": "Standardized disability questionnaires",
         "fullDescription": "Comprehensive Disability Benefits Questionnaires (DBQs) completed by qualified medical professionals. These standardized forms help establish the severity and service connection of your medical conditions, providing the VA with detailed medical evidence in their preferred format.",
-        "price": "₹3,999",
+        "price": "$250",
         "duration": "5-7 business days",
         "features": [
             "VA-standardized DBQ forms",
             "Condition-specific questionnaires",
             "Medical professional completion",
             "Evidence-based assessments",
-            "Ready for VA submission"
+            "Ready for VA submission",
+            "Rush service: +$50 USD (36-48 hours)"
         ],
         "icon": "ClipboardList",
         "category": "assessment"
@@ -104,14 +107,15 @@ MOCK_SERVICES = [
         "title": "Aid & Attendance (21-2680)",
         "shortDescription": "Enhanced pension benefits documentation",
         "fullDescription": "Specialized medical evaluations for Aid & Attendance benefits, helping veterans and surviving spouses qualify for enhanced pension payments. Our comprehensive assessment covers activities of daily living, mobility limitations, and care requirements.",
-        "price": "₹5,999",
+        "price": "$2,000",
         "duration": "7-10 business days",
         "features": [
             "Form 21-2680 completion",
             "Activities of daily living assessment",
             "Mobility and care requirement evaluation",
             "Physician examination and documentation",
-            "Enhanced pension qualification support"
+            "Enhanced pension qualification support",
+            "Rush service: +$500 USD (36-48 hours)"
         ],
         "icon": "Heart",
         "category": "benefits"
@@ -122,7 +126,7 @@ MOCK_SERVICES = [
         "title": "C&P Coaching",
         "shortDescription": "Examination preparation and guidance",
         "fullDescription": "Expert preparation for your Compensation & Pension (C&P) examination. Our coaching service helps you understand what to expect, how to effectively communicate your symptoms, and ensures you're fully prepared to present your case during the examination.",
-        "price": "₹2,499",
+        "price": "$29",
         "duration": "Same day service",
         "features": [
             "Pre-examination consultation",
@@ -137,13 +141,13 @@ MOCK_SERVICES = [
     {
         "id": "5",
         "slug": "expert-consultation",
-        "title": "One-on-One Consultation with Expert",
-        "shortDescription": "Personal consultation with Dr. Kishan Bhalani",
-        "fullDescription": "Direct, personal consultation with Dr. Kishan Bhalani via video call or phone. Get expert guidance on your specific case, comprehensive claim review, medical condition assessment, and personalized recommendations for your VA disability claim strategy.",
-        "price": "₹3,499",
+        "title": "Telehealth Consultation",
+        "shortDescription": "Virtual consultation with medical expert",
+        "fullDescription": "Professional telehealth consultation with our medical expert via secure video call. Get expert medical guidance on your specific case, comprehensive claim review, medical condition assessment, and personalized recommendations for your VA disability claim strategy.",
+        "price": "$250",
         "duration": "1-hour consultation scheduled within 3-5 days",
         "features": [
-            "Personal consultation with Dr. Kishan Bhalani",
+            "Personal consultation with medical expert",
             "Comprehensive claim review and analysis",
             "Medical condition assessment and guidance",
             "Personalized claim strategy recommendations",
@@ -156,9 +160,9 @@ MOCK_SERVICES = [
         "id": "6",
         "slug": "record-review",
         "title": "Record Review",
-        "shortDescription": "Professional medical record analysis",
-        "fullDescription": "Comprehensive review and analysis of your medical records by qualified professionals. We identify key evidence, gaps in documentation, and provide strategic recommendations to strengthen your VA disability claim.",
-        "price": "₹2,999",
+        "shortDescription": "Professional medical record analysis (unlimited pages)",
+        "fullDescription": "Comprehensive review and analysis of your medical records by qualified professionals with no page limit. We identify key evidence, gaps in documentation, and provide strategic recommendations to strengthen your VA disability claim.",
+        "price": "$100",
         "duration": "5-7 business days",
         "features": [
             "Complete medical record analysis",
@@ -176,7 +180,7 @@ MOCK_SERVICES = [
         "title": "1151 Claim (VA Medical Malpractice)",
         "shortDescription": "Specialized VA negligence claims",
         "fullDescription": "Expert assistance with VA Form 1151 claims for medical malpractice or negligence by VA healthcare providers. Our specialized service helps establish VA fault and secure compensation for additional disabilities caused by VA medical care.",
-        "price": "₹7,999",
+        "price": "$2,000",
         "duration": "10-14 business days",
         "features": [
             "VA Form 1151 preparation and filing",
@@ -197,7 +201,7 @@ MOCK_BLOG_POSTS = [
         "title": "Nexus and Rebuttal Letters: Your Key to VA Claim Success",
         "excerpt": "Understanding the critical role of nexus and rebuttal letters in securing your VA disability benefits and winning appeals.",
         "content": "Nexus and rebuttal letters are powerful medical documents that can make or break your VA disability claim...",
-        "author": "Dr. Kishan Bhalani",
+        "author": "Military Disability Nexus",
         "publishedAt": "2024-01-15T10:00:00Z",
         "category": "VA Claims",
         "readTime": "6 min read",
@@ -209,7 +213,7 @@ MOCK_BLOG_POSTS = [
         "title": "How to Prepare for Your C&P Examination: Expert Tips",
         "excerpt": "Essential preparation strategies for your Compensation & Pension examination to maximize your disability rating.",
         "content": "The C&P examination is a crucial step in your VA disability claim process...",
-        "author": "Dr. Kishan Bhalani",
+        "author": "Military Disability Nexus",
         "publishedAt": "2024-01-10T14:30:00Z",
         "category": "Examinations",
         "readTime": "8 min read",
@@ -221,7 +225,7 @@ MOCK_BLOG_POSTS = [
 @app.get("/")
 async def root():
     return {
-        "message": "Dr. Kishan Bhalani Medical Documentation Services API",
+        "message": "Military Disability Nexus Medical Documentation Services API",
         "status": "active",
         "version": "1.0.0",
         "endpoints": {
@@ -237,7 +241,7 @@ async def health_check():
     return {
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
-        "service": "Dr. Kishan Bhalani Medical Documentation API"
+        "service": "Military Disability Nexus Medical Documentation API"
     }
 
 # API endpoints

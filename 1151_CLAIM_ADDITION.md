@@ -21,7 +21,7 @@ A 1151 claim is filed under **38 U.S.C. § 1151** when a veteran believes they w
 - **Service ID**: 7
 - **Slug**: `1151-claim`
 - **Title**: "1151 Claim (VA Medical Malpractice)"
-- **Price**: ₹7,999 (highest priced service due to complexity)
+- **Price**: $2,000 (highest priced service due to complexity)
 - **Duration**: 10-14 business days
 - **Category**: `malpractice`
 
@@ -50,7 +50,7 @@ A 1151 claim is filed under **38 U.S.C. § 1151** when a veteran believes they w
 
 ### **Documentation Updates:**
 1. **`README.md`** - Updated to reflect 7 services instead of 6
-2. **Service pricing list** - Added 1151 Claim at ₹7,999
+2. **Service pricing list** - Added 1151 Claim at $2,000
 
 ## Why 1151 Claims are Important
 
@@ -60,7 +60,7 @@ A 1151 claim is filed under **38 U.S.C. § 1151** when a veteran believes they w
 - Addresses a significant gap in veteran healthcare protection
 
 ### **Higher Complexity = Higher Value:**
-- **Highest priced service** (₹7,999) due to complexity
+- **Highest priced service** ($2,000) due to complexity
 - Requires proving VA negligence and deviation from medical standards
 - Needs expert medical analysis and detailed causation opinions
 - **Higher burden of proof** than standard VA disability claims
@@ -95,7 +95,7 @@ A 1151 claim is filed under **38 U.S.C. § 1151** when a veteran believes they w
 - **Footer navigation**: Added to services quick links
 
 ### **Pricing Strategy:**
-- **Premium pricing** (₹7,999) reflects complexity and expertise required
+- **Premium pricing** ($2,000) reflects complexity and expertise required
 - **Longer timeline** (10-14 days) accounts for thorough analysis needed
 - **Specialized expertise** positioning for complex medical-legal cases
 
@@ -123,7 +123,7 @@ A 1151 claim is filed under **38 U.S.C. § 1151** when a veteran believes they w
 - **Expert positioning** in complex medical-legal documentation
 
 ### **Revenue Potential:**
-- **Premium pricing** at ₹7,999 per claim
+- **Premium pricing** at $2,000 per claim
 - **Specialized expertise** commands higher fees
 - **Underserved market** with significant demand
 - **Complex cases** requiring extensive analysis
@@ -149,6 +149,6 @@ A 1151 claim is filed under **38 U.S.C. § 1151** when a veteran believes they w
 
 **1151 Claim Service Addition**: ✅ Complete  
 **Total Services**: 7 (including new 1151 Claims)  
-**Highest Value Service**: ₹7,999 for 1151 Claims  
+**Highest Value Service**: $2,000 for 1151 Claims  
 **Educational Content**: Added comprehensive blog post  
 **Platform Integration**: Fully integrated across all components

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Upload, CheckCircle } from 'lucide-react';
+import { Mail, Phone, Send, Upload, CheckCircle } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 import FileUpload from '../components/FileUpload';
@@ -84,7 +84,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <div className="font-semibold text-slate-900">Email</div>
-                    <div className="text-slate-600">contact@drkishanbhalani.com</div>
+                    <div className="text-slate-600">contact@militarydisabilitynexus.com</div>
                   </div>
                 </div>
 
@@ -98,15 +98,7 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 text-teal-600" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-slate-900">Location</div>
-                    <div className="text-slate-600">Ahmedabad, Gujarat, India</div>
-                  </div>
-                </div>
+
               </div>
             </div>
 

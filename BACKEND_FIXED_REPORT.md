@@ -117,31 +117,31 @@ else:
 
 ## 🎯 **Services Available:**
 
-1. **Nexus & Rebuttal Letters** - ₹4,999
-   - Combined service for claims and appeals
-   - Complete medical opinion documentation
+1. **Nexus Letters** - $1,500
+   - Professional nexus letters for service connection
+   - Up to 4 claims per letter
 
-2. **Public DBQs** - ₹3,999
+2. **DBQs** - $250
    - Standardized VA disability questionnaires
    - Professional medical evaluations
 
-3. **Aid & Attendance (21-2680)** - ₹5,999
+3. **Aid & Attendance (21-2680)** - $2,000
    - Enhanced pension benefits documentation
    - Physician evaluations for assistance needs
 
-4. **C&P Coaching** - ₹2,499
+4. **C&P Coaching** - $29
    - Examination preparation and guidance
    - Same-day service availability
 
-5. **One-on-One Consultation with Expert** - ₹3,499
-   - Personal consultation with Dr. Kishan Bhalani
+5. **Telehealth Consultation** - $250
+   - Virtual consultation with Dr. Kishan Bhalani
    - Comprehensive claim review and guidance
 
-6. **Record Review** - ₹2,999
-   - Professional medical record analysis
+6. **Record Review** - $100
+   - Professional medical record analysis (unlimited pages)
    - Timeline development and strategy
 
-7. **1151 Claim (VA Medical Malpractice)** - ₹7,999
+7. **1151 Claim (VA Medical Malpractice)** - $2,000
    - Specialized VA negligence claims
    - Expert medical malpractice analysis
 

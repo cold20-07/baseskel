@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Shield, Mail, MapPin } from 'lucide-react';
+import { Shield, Mail } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,7 +14,7 @@ const Footer = () => {
               <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-lg flex items-center justify-center">
                 <Shield className="w-6 h-6 text-white" />
               </div>
-              <span className="text-lg font-bold text-white">Dr. Kishan Bhalani</span>
+              <span className="text-lg font-bold text-white">Military Disability Nexus</span>
             </div>
             <p className="text-sm text-slate-400 mb-4 max-w-md">
               Professional medical documentation services for veterans. Expert care and comprehensive support.
@@ -22,12 +22,9 @@ const Footer = () => {
             <div className="space-y-2 text-sm">
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-teal-500" />
-                <span>contact@drkishanbhalani.com</span>
+                <span>contact@militarydisabilitynexus.com</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4 text-teal-500" />
-                <span>Ahmedabad, Gujarat</span>
-              </div>
+
             </div>
           </div>
 
@@ -37,17 +34,22 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/services/nexus-rebuttal-letters" className="hover:text-teal-400 transition-colors">
-                  Nexus & Rebuttal Letters
+                  Nexus Letters
                 </Link>
               </li>
               <li>
                 <Link to="/services/public-dbqs" className="hover:text-teal-400 transition-colors">
-                  Public DBQs
+                  DBQs
                 </Link>
               </li>
               <li>
                 <Link to="/services/aid-attendance" className="hover:text-teal-400 transition-colors">
                   Aid & Attendance
+                </Link>
+              </li>
+              <li>
+                <Link to="/aid-attendance-form" className="hover:text-teal-400 transition-colors">
+                  A&A Form
                 </Link>
               </li>
               <li>

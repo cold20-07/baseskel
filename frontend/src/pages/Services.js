@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Award, CheckCircle, Shield, ArrowRight } from 'lucide-react';
 import axios from 'axios';
+import DataSourceDebug from '../components/DataSourceDebug';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -9,16 +10,22 @@ const API = `${BACKEND_URL}/api`;
 const Services = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [dataSource, setDataSource] = useState('unknown');
+  const [apiError, setApiError] = useState(null);
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const response = await axios.get(`${API}/services`);
         setServices(response.data);
+        setDataSource('API');
+        setApiError(null);
       } catch (error) {
         console.error('Error fetching services:', error);
+        setApiError(error.message);
         // Fallback to mock data when backend is unavailable
         setServices(mockServices);
+        setDataSource('Mock');
       } finally {
         setLoading(false);
       }
@@ -31,10 +38,10 @@ const Services = () => {
     {
       id: "1",
       slug: "nexus-rebuttal-letters",
-      title: "Nexus & Rebuttal Letters",
-      shortDescription: "Comprehensive medical opinions for claims and appeals",
-      features: ["Nexus opinion letters", "Rebuttal to VA denials", "Direct/secondary/aggravation analysis", "Clear medical rationale"],
-      basePriceInINR: 4999,
+      title: "Nexus Letters",
+      shortDescription: "Professional nexus letters for service connection",
+      features: ["Professional nexus opinion letters", "Up to 4 claims per letter", "Direct, secondary, and aggravation analysis", "Clear medical rationale and evidence review", "Professional formatting for VA submission", "Rush service: +$500 USD (36-48 hours)"],
+      basePriceInUSD: 1500,
       duration: "7-10 business days",
       category: "nexus-letter",
       icon: "file-text"
@@ -42,10 +49,10 @@ const Services = () => {
     {
       id: "2",
       slug: "public-dbqs",
-      title: "Public DBQs",
-      shortDescription: "Standardized disability questionnaires for VA claims",
-      features: ["Latest public VA DBQs", "Objective findings", "Functional impact"],
-      basePriceInINR: 3999,
+      title: "DBQs",
+      shortDescription: "Standardized disability questionnaires",
+      features: ["VA-standardized DBQ forms", "Condition-specific questionnaires", "Medical professional completion", "Evidence-based assessments", "Ready for VA submission", "Rush service: +$50 USD (36-48 hours)"],
+      basePriceInUSD: 250,
       duration: "5-7 business days",
       category: "dbq",
       icon: "clipboard"
@@ -54,9 +61,9 @@ const Services = () => {
       id: "3",
       slug: "aid-attendance",
       title: "Aid & Attendance (21-2680)",
-      shortDescription: "Enhanced pension benefits for veterans needing assistance",
-      features: ["Physician evaluation", "ADL documentation", "When clinically indicated"],
-      basePriceInINR: 5999,
+      shortDescription: "Enhanced pension benefits documentation",
+      features: ["Form 21-2680 completion", "Activities of daily living assessment", "Mobility and care requirement evaluation", "Physician examination and documentation", "Enhanced pension qualification support", "Rush service: +$500 USD (36-48 hours)"],
+      basePriceInUSD: 2000,
       duration: "10-14 business days",
       category: "aid-attendance",
       icon: "heart-pulse"
@@ -67,7 +74,7 @@ const Services = () => {
       title: "C&P Coaching",
       shortDescription: "Preparation for compensation and pension examinations",
       features: ["What to expect", "Accurate symptom reporting", "Logbooks & lay tips"],
-      basePriceInINR: 2499,
+      basePriceInUSD: 29,
       duration: "Same day or next business day",
       category: "coaching",
       icon: "users"
@@ -77,8 +84,8 @@ const Services = () => {
       slug: "expert-consultation",
       title: "One-on-One Consultation with Expert",
       shortDescription: "Personal consultation to review your claim with medical expert",
-      features: ["Personal consultation with Dr. Bhalani", "Comprehensive claim review", "Medical condition assessment", "Personalized recommendations"],
-      basePriceInINR: 3499,
+      features: ["Personal consultation with medical expert", "Comprehensive claim review", "Medical condition assessment", "Personalized recommendations"],
+      basePriceInUSD: 249,
       duration: "1-hour consultation scheduled within 3-5 days",
       category: "consultation",
       icon: "users"
@@ -87,9 +94,9 @@ const Services = () => {
       id: "6",
       slug: "record-review",
       title: "Record Review",
-      shortDescription: "Professional analysis of your medical documentation",
-      features: ["Service/med records synthesis", "Timeline build", "Provider question set"],
-      basePriceInINR: 2999,
+      shortDescription: "Professional analysis of your medical documentation (unlimited pages)",
+      features: ["Unlimited pages review", "Service/med records synthesis", "Timeline build", "Provider question set"],
+      basePriceInUSD: 99,
       duration: "5-7 business days",
       category: "review",
       icon: "file-search"
@@ -100,7 +107,7 @@ const Services = () => {
       title: "1151 Claim (VA Medical Malpractice)",
       shortDescription: "Expert medical opinions for VA medical negligence claims",
       features: ["VA treatment record analysis", "Medical negligence assessment", "Causation nexus opinions", "Standard of care evaluation"],
-      basePriceInINR: 7999,
+      basePriceInUSD: 1999,
       duration: "10-14 business days",
       category: "malpractice",
       icon: "alert-triangle"
@@ -122,6 +129,11 @@ const Services = () => {
 
   return (
     <div className="bg-slate-50 min-h-screen">
+      <DataSourceDebug 
+        dataSource={dataSource} 
+        apiUrl={`${API}/services`}
+        error={apiError}
+      />
       {/* Header */}
       <section className="bg-gradient-to-br from-teal-600 to-emerald-600 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -168,18 +180,29 @@ const Services = () => {
                       <div className="flex items-center justify-between pt-6 border-t border-slate-200">
                         <div>
                           <div className="text-2xl font-bold text-slate-900">
-                            ₹{service.basePriceInINR.toLocaleString()}
+                            ${service.basePriceInUSD.toLocaleString()}
                           </div>
                           <div className="text-sm text-slate-500">{service.duration}</div>
                         </div>
-                        <Link
-                          to={`/services/${service.slug}`}
-                          data-testid={`view-service-${service.slug}`}
-                          className="inline-flex items-center space-x-2 bg-teal-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-teal-700 transition-all hover:shadow-lg transform hover:-translate-y-0.5"
-                        >
-                          <span>View Details</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
+                        <div className="flex space-x-2">
+                          <Link
+                            to={`/services/${service.slug}`}
+                            data-testid={`view-service-${service.slug}`}
+                            className="inline-flex items-center space-x-2 bg-teal-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-teal-700 transition-all hover:shadow-lg transform hover:-translate-y-0.5"
+                          >
+                            <span>View Details</span>
+                            <ArrowRight className="w-4 h-4" />
+                          </Link>
+                          {service.slug === 'aid-attendance' && (
+                            <Link
+                              to="/aid-attendance-form"
+                              data-testid="aid-attendance-form-link"
+                              className="inline-flex items-center space-x-2 bg-emerald-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-emerald-700 transition-all hover:shadow-lg transform hover:-translate-y-0.5"
+                            >
+                              <span>Start Form</span>
+                            </Link>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>

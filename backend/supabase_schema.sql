@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS services (
     shortDescription TEXT NOT NULL,
     fullDescription TEXT NOT NULL,
     features JSONB NOT NULL DEFAULT '[]',
-    basePriceInINR INTEGER NOT NULL,
+    basePriceInUSD INTEGER NOT NULL,
     duration TEXT NOT NULL,
     category TEXT NOT NULL,
     icon TEXT NOT NULL,

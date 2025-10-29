@@ -22,16 +22,18 @@ const ServiceDetail = () => {
     "nexus-rebuttal-letters": {
       id: "1",
       slug: "nexus-rebuttal-letters",
-      title: "Nexus & Rebuttal Letters",
-      shortDescription: "Comprehensive medical opinions for claims and appeals",
-      fullDescription: "Professional nexus and rebuttal letters that establish clear connections between your military service and medical conditions, or challenge unfavorable VA decisions. Our expert medical opinions provide the crucial evidence needed for both initial claims and appeals processes.",
+      title: "Nexus Letters",
+      shortDescription: "Professional nexus letters for service connection",
+      fullDescription: "Professional nexus letters for establishing service connection of your medical conditions to military service. Our comprehensive service provides detailed medical opinions linking your current disabilities to your military service, supporting your VA disability claims with expert medical documentation.",
       features: [
-        "Nexus opinion letters",
-        "Rebuttal to VA denials", 
-        "Direct/secondary/aggravation analysis",
-        "Clear medical rationale"
+        "Professional nexus opinion letters",
+        "Up to 4 claims per letter",
+        "Direct, secondary, and aggravation analysis",
+        "Clear medical rationale and evidence review",
+        "Professional formatting for VA submission",
+        "Rush service: +$500 USD (36-48 hours)"
       ],
-      basePriceInINR: 4999,
+      basePriceInUSD: 1500,
       duration: "7-10 business days",
       category: "nexus-letter",
       icon: "file-text",
@@ -49,15 +51,18 @@ const ServiceDetail = () => {
     "public-dbqs": {
       id: "2",
       slug: "public-dbqs",
-      title: "Public DBQs",
-      shortDescription: "Standardized disability questionnaires for VA claims",
-      fullDescription: "Disability Benefits Questionnaires (DBQs) are standardized medical examination forms used by the VA to evaluate disability claims. Our licensed physicians complete these forms based on current VA guidelines and your medical condition.",
+      title: "DBQs",
+      shortDescription: "Standardized disability questionnaires",
+      fullDescription: "Comprehensive Disability Benefits Questionnaires (DBQs) completed by qualified medical professionals. These standardized forms help establish the severity and service connection of your medical conditions, providing the VA with detailed medical evidence in their preferred format.",
       features: [
-        "Latest public VA DBQs",
-        "Objective findings",
-        "Functional impact"
+        "VA-standardized DBQ forms",
+        "Condition-specific questionnaires",
+        "Medical professional completion",
+        "Evidence-based assessments",
+        "Ready for VA submission",
+        "Rush service: +$50 USD (36-48 hours)"
       ],
-      basePriceInINR: 3999,
+      basePriceInUSD: 250,
       duration: "5-7 business days",
       category: "dbq",
       icon: "clipboard",
@@ -72,14 +77,17 @@ const ServiceDetail = () => {
       id: "3",
       slug: "aid-attendance",
       title: "Aid & Attendance (21-2680)",
-      shortDescription: "Enhanced pension benefits for veterans needing assistance",
-      fullDescription: "Aid and Attendance is a benefit available to veterans and surviving spouses who require the regular assistance of another person. We provide comprehensive physician evaluations to support your A&A benefit claim.",
+      shortDescription: "Enhanced pension benefits documentation",
+      fullDescription: "Specialized medical evaluations for Aid & Attendance benefits, helping veterans and surviving spouses qualify for enhanced pension payments. Our comprehensive assessment covers activities of daily living, mobility limitations, and care requirements.",
       features: [
-        "Physician evaluation",
-        "ADL documentation", 
-        "When clinically indicated"
+        "Form 21-2680 completion",
+        "Activities of daily living assessment",
+        "Mobility and care requirement evaluation",
+        "Physician examination and documentation",
+        "Enhanced pension qualification support",
+        "Rush service: +$500 USD (36-48 hours)"
       ],
-      basePriceInINR: 5999,
+      basePriceInUSD: 2000,
       duration: "10-14 business days",
       category: "aid-attendance",
       icon: "heart-pulse",
@@ -101,7 +109,7 @@ const ServiceDetail = () => {
         "Accurate symptom reporting",
         "Logbooks & lay tips"
       ],
-      basePriceInINR: 2499,
+      basePriceInUSD: 29,
       duration: "Same day or next business day",
       category: "coaching",
       icon: "users",
@@ -117,21 +125,21 @@ const ServiceDetail = () => {
       slug: "expert-consultation",
       title: "One-on-One Consultation with Expert",
       shortDescription: "Personal consultation to review your claim with medical expert",
-      fullDescription: "Schedule a comprehensive one-on-one consultation with Dr. Kishan Bhalani to review your VA claim, discuss your medical conditions, and receive personalized guidance on strengthening your case. This direct consultation provides expert insights tailored to your specific situation.",
+      fullDescription: "Schedule a comprehensive one-on-one consultation with our medical expert to review your VA claim, discuss your medical conditions, and receive personalized guidance on strengthening your case. This direct consultation provides expert insights tailored to your specific situation.",
       features: [
-        "Personal consultation with Dr. Bhalani",
+        "Personal consultation with medical expert",
         "Comprehensive claim review",
         "Medical condition assessment",
         "Personalized recommendations"
       ],
-      basePriceInINR: 3499,
+      basePriceInUSD: 249,
       duration: "1-hour consultation scheduled within 3-5 days",
       category: "consultation",
       icon: "users",
       faqs: [
         {
           question: "How does the consultation work?",
-          answer: "You'll have a scheduled one-on-one video or phone consultation with Dr. Kishan Bhalani to discuss your claim, medical conditions, and receive personalized guidance."
+          answer: "You'll have a scheduled one-on-one video or phone consultation with our medical expert to discuss your claim, medical conditions, and receive personalized guidance."
         }
       ]
     },
@@ -146,7 +154,7 @@ const ServiceDetail = () => {
         "Timeline build",
         "Provider question set"
       ],
-      basePriceInINR: 2999,
+      basePriceInUSD: 99,
       duration: "5-7 business days",
       category: "review",
       icon: "file-search",
@@ -169,7 +177,7 @@ const ServiceDetail = () => {
         "Causation nexus opinions",
         "Standard of care evaluation"
       ],
-      basePriceInINR: 7999,
+      basePriceInUSD: 1999,
       duration: "10-14 business days",
       category: "malpractice",
       icon: "alert-triangle",
@@ -288,7 +296,7 @@ const ServiceDetail = () => {
               <div className="mb-6">
                 <div className="text-sm text-slate-500 mb-2">Starting at</div>
                 <div className="text-4xl font-bold text-slate-900 mb-1">
-                  ₹{service.basePriceInINR.toLocaleString()}
+                  ${service.basePriceInUSD.toLocaleString()}
                 </div>
               </div>
 
@@ -303,16 +311,38 @@ const ServiceDetail = () => {
                 </div>
               </div>
 
-              <Link
-                to="/contact"
-                data-testid="book-now-button"
-                className="w-full bg-teal-600 text-white px-6 py-4 rounded-full font-semibold text-center hover:bg-teal-700 transition-all hover:shadow-lg block"
-              >
-                Book Now
-              </Link>
+              {service.slug === 'aid-attendance' ? (
+                <div className="space-y-3">
+                  <Link
+                    to="/aid-attendance-form"
+                    data-testid="aid-attendance-form-button"
+                    className="w-full bg-teal-600 text-white px-6 py-4 rounded-full font-semibold text-center hover:bg-teal-700 transition-all hover:shadow-lg block"
+                  >
+                    Complete Aid & Attendance Form
+                  </Link>
+                  <Link
+                    to="/contact"
+                    data-testid="book-now-button"
+                    className="w-full bg-white text-teal-600 px-6 py-4 rounded-full font-semibold text-center hover:bg-slate-50 transition-all border-2 border-teal-600 block"
+                  >
+                    General Inquiry
+                  </Link>
+                </div>
+              ) : (
+                <Link
+                  to="/contact"
+                  data-testid="book-now-button"
+                  className="w-full bg-teal-600 text-white px-6 py-4 rounded-full font-semibold text-center hover:bg-teal-700 transition-all hover:shadow-lg block"
+                >
+                  Book Now
+                </Link>
+              )}
 
               <p className="text-sm text-slate-500 mt-4 text-center">
-                Get a free consultation before booking
+                {service.slug === 'aid-attendance' 
+                  ? 'Complete our specialized form for faster processing'
+                  : 'Get a free consultation before booking'
+                }
               </p>
             </div>
           </div>

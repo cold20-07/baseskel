@@ -19,10 +19,10 @@ const About = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg text-center">
             <h2 className="text-3xl font-bold text-slate-900 mb-6">
-              Dr. Kishan Bhalani - Medical Documentation Expert
+              Military Disability Nexus - Medical Documentation Expert
             </h2>
             <p className="text-lg text-slate-700 leading-relaxed mb-6">
-              Based in Ahmedabad, Gujarat, Dr. Kishan Bhalani provides professional medical documentation services for veterans. With extensive experience in medical-legal documentation, we focus on accurate, ethical, and comprehensive medical evidence.
+              Military Disability Nexus provides professional medical documentation services for veterans. With extensive experience in medical-legal documentation, we focus on accurate, ethical, and comprehensive medical evidence.
             </p>
             <p className="text-lg text-slate-700 leading-relaxed">
               Every nexus letter, DBQ, and consultation is tailored to your specific case, grounded in clinical merit, and designed to provide clear, professional medical documentation for your needs.
@@ -126,7 +126,7 @@ const About = () => {
               },
               {
                 q: 'How long does it take?',
-                a: 'Most nexus letters: 7-10 business days. DBQs: 5-7 days. Expedited options available.',
+                a: 'Most nexus letters: 7-10 business days. DBQs: 5-7 days. Rush service available for 36-48 hours delivery.',
               },
             ].map((faq, idx) => (
               <details key={idx} className="bg-white rounded-xl p-6 group border-2 border-slate-200">

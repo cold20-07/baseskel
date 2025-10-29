@@ -65,31 +65,31 @@ All core systems are working correctly with comprehensive HIPAA compliance and m
 
 ### **7 Services Configured:**
 
-1. ✅ **Nexus & Rebuttal Letters** - ₹4,999
-   - Combined service for comprehensive medical opinions
-   - Covers initial claims and appeals
+1. ✅ **Nexus Letters** - $1,500
+   - Professional nexus letters for service connection
+   - Up to 4 claims per letter
 
-2. ✅ **Public DBQs** - ₹3,999
+2. ✅ **DBQs** - $250
    - Standardized disability questionnaires
    - VA-compliant forms
 
-3. ✅ **Aid & Attendance (21-2680)** - ₹5,999
+3. ✅ **Aid & Attendance (21-2680)** - $2,000
    - Enhanced pension benefits documentation
    - Physician evaluations
 
-4. ✅ **C&P Coaching** - ₹2,499
+4. ✅ **C&P Coaching** - $29
    - Examination preparation and guidance
    - Same-day service
 
-5. ✅ **One-on-One Consultation with Expert** - ₹3,499
-   - Personal consultation with Dr. Kishan Bhalani
+5. ✅ **Telehealth Consultation** - $250
+   - Virtual consultation with Dr. Kishan Bhalani
    - 1-hour video/phone session
 
-6. ✅ **Record Review** - ₹2,999
-   - Professional medical record analysis
+6. ✅ **Record Review** - $100
+   - Professional medical record analysis (unlimited pages)
    - Timeline and strategy development
 
-7. ✅ **1151 Claim (VA Medical Malpractice)** - ₹7,999
+7. ✅ **1151 Claim (VA Medical Malpractice)** - $2,000
    - Specialized VA negligence claims
    - Highest complexity service
 

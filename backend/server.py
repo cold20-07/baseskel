@@ -214,8 +214,8 @@ def get_mock_services():
             "title": "Nexus & Rebuttal Letters",
             "shortDescription": "Comprehensive medical opinions for claims and appeals",
             "fullDescription": "Professional nexus and rebuttal letters that establish clear connections between your military service and medical conditions, or challenge unfavorable VA decisions.",
-            "features": ["Nexus opinion letters", "Rebuttal to VA denials", "Direct/secondary/aggravation analysis", "Clear medical rationale"],
-            "basePriceInINR": 4999,
+            "features": ["Nexus opinion letters", "Rebuttal to VA denials", "Direct/secondary/aggravation analysis", "Clear medical rationale", "Rush service: +$500 USD (36-48 hours)"],
+            "basePriceInUSD": 1499,
             "duration": "7-10 business days",
             "category": "nexus-letter",
             "icon": "file-text",
@@ -224,11 +224,11 @@ def get_mock_services():
         {
             "id": "2",
             "slug": "public-dbqs",
-            "title": "Public DBQs",
+            "title": "DBQs",
             "shortDescription": "Standardized disability questionnaires for VA claims",
             "fullDescription": "Disability Benefits Questionnaires (DBQs) are standardized medical examination forms used by the VA to evaluate disability claims.",
-            "features": ["Latest public VA DBQs", "Objective findings", "Functional impact"],
-            "basePriceInINR": 3999,
+            "features": ["Latest public VA DBQs", "Objective findings", "Functional impact", "Rush service: +$50 USD (36-48 hours)"],
+            "basePriceInUSD": 249,
             "duration": "5-7 business days",
             "category": "dbq",
             "icon": "clipboard",
@@ -240,8 +240,8 @@ def get_mock_services():
             "title": "Aid & Attendance (21-2680)",
             "shortDescription": "Enhanced pension benefits for veterans needing assistance",
             "fullDescription": "Aid and Attendance is a benefit available to veterans and surviving spouses who require the regular assistance of another person.",
-            "features": ["Physician evaluation", "ADL documentation", "When clinically indicated"],
-            "basePriceInINR": 5999,
+            "features": ["Physician evaluation", "ADL documentation", "When clinically indicated", "Rush service: +$500 USD (36-48 hours)"],
+            "basePriceInUSD": 1999,
             "duration": "10-14 business days",
             "category": "aid-attendance",
             "icon": "heart-pulse",
@@ -254,7 +254,7 @@ def get_mock_services():
             "shortDescription": "Preparation for compensation and pension examinations",
             "fullDescription": "Prepare for your C&P exam with expert coaching. We help you understand what to expect, how to accurately report your symptoms, and provide tips to ensure your disabilities are properly documented.",
             "features": ["What to expect", "Accurate symptom reporting", "Logbooks & lay tips"],
-            "basePriceInINR": 2499,
+            "basePriceInUSD": 29,
             "duration": "Same day or next business day",
             "category": "coaching",
             "icon": "users",
@@ -267,7 +267,7 @@ def get_mock_services():
             "shortDescription": "Personal consultation to review your claim with medical expert",
             "fullDescription": "Schedule a comprehensive one-on-one consultation with Dr. Kishan Bhalani to review your VA claim, discuss your medical conditions, and receive personalized guidance.",
             "features": ["Personal consultation with Dr. Bhalani", "Comprehensive claim review", "Medical condition assessment", "Personalized recommendations"],
-            "basePriceInINR": 3499,
+            "basePriceInUSD": 249,
             "duration": "1-hour consultation scheduled within 3-5 days",
             "category": "consultation",
             "icon": "users",
@@ -280,7 +280,7 @@ def get_mock_services():
             "shortDescription": "Professional analysis of your medical documentation",
             "fullDescription": "Our medical professionals review your service and medical records to identify conditions eligible for VA compensation, build a comprehensive timeline, and prepare targeted questions for your providers.",
             "features": ["Service/med records synthesis", "Timeline build", "Provider question set"],
-            "basePriceInINR": 2999,
+            "basePriceInUSD": 99,
             "duration": "5-7 business days",
             "category": "review",
             "icon": "file-search",
@@ -293,7 +293,7 @@ def get_mock_services():
             "shortDescription": "Expert medical opinions for VA medical negligence claims",
             "fullDescription": "Specialized medical documentation for 38 U.S.C. § 1151 claims when veterans are injured or their conditions worsen due to VA medical care.",
             "features": ["VA treatment record analysis", "Medical negligence assessment", "Causation nexus opinions", "Standard of care evaluation"],
-            "basePriceInINR": 7999,
+            "basePriceInUSD": 1999,
             "duration": "10-14 business days",
             "category": "malpractice",
             "icon": "alert-triangle",
@@ -338,7 +338,7 @@ class Service(BaseModel):
     shortDescription: str
     fullDescription: str
     features: List[str]
-    basePriceInINR: int
+    basePriceInUSD: int
     duration: str
     category: str
     icon: str

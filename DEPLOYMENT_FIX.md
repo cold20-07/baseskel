@@ -125,13 +125,13 @@ The new `deploy_server.py`:
 ## 📊 Service Data Available
 
 **7 Services:**
-1. Nexus & Rebuttal Letters - ₹4,999
-2. Public DBQs - ₹3,999  
-3. Aid & Attendance (21-2680) - ₹5,999
-4. C&P Coaching - ₹2,499
-5. One-on-One Consultation with Expert - ₹3,499
-6. Record Review - ₹2,999
-7. 1151 Claim (VA Medical Malpractice) - ₹7,999
+1. Nexus Letters - $1,500
+2. DBQs - $250  
+3. Aid & Attendance (21-2680) - $2,000
+4. C&P Coaching - $29
+5. Telehealth Consultation - $250
+6. Record Review - $100
+7. 1151 Claim (VA Medical Malpractice) - $2,000
 
 **2 Blog Posts:**
 1. "Nexus and Rebuttal Letters: Your Key to VA Claim Success"

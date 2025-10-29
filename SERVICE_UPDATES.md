@@ -14,7 +14,7 @@ Updated the service offerings to better reflect comprehensive medical documentat
 #### **Updated Service Details:**
 - **Title**: "Nexus & Rebuttal Letters"
 - **Slug**: `nexus-rebuttal-letters`
-- **Price**: ₹4,999 (same price, more value)
+- **Price**: $1,500 (updated pricing)
 - **Duration**: 7-10 business days
 
 #### **Enhanced Features:**
@@ -37,7 +37,7 @@ Updated the service offerings to better reflect comprehensive medical documentat
 #### **New Service Details:**
 - **Title**: "One-on-One Consultation with Expert"
 - **Slug**: `expert-consultation`
-- **Price**: ₹3,499 (same price)
+- **Price**: $250 (updated pricing)
 - **Duration**: 1-hour consultation scheduled within 3-5 days
 
 #### **Personal Consultation Features:**
@@ -56,33 +56,33 @@ Updated the service offerings to better reflect comprehensive medical documentat
 
 ### **Updated 7 Services:**
 
-1. **Nexus & Rebuttal Letters** - ₹4,999
-   - Combined service for initial claims and appeals
-   - Comprehensive medical opinions
+1. **Nexus Letters** - $1,500
+   - Professional nexus letters for service connection
+   - Up to 4 claims per letter
 
-2. **Public DBQs** - ₹3,999
+2. **DBQs** - $250
    - Standardized disability questionnaires
-   - Unchanged
+   - Updated pricing
 
-3. **Aid & Attendance (21-2680)** - ₹5,999
+3. **Aid & Attendance (21-2680)** - $2,000
    - Enhanced pension benefits documentation
-   - Unchanged
+   - Updated pricing
 
-4. **C&P Coaching** - ₹2,499
+4. **C&P Coaching** - $29
    - Examination preparation
    - Unchanged
 
-5. **One-on-One Consultation with Expert** - ₹3,499
-   - Personal consultation with Dr. Bhalani
-   - NEW: Replaced strategy consult
+5. **Telehealth Consultation** - $250
+   - Virtual consultation with Dr. Bhalani
+   - Updated service name and pricing
 
-6. **Record Review** - ₹2,999
-   - Medical documentation analysis
-   - Unchanged
+6. **Record Review** - $100
+   - Medical documentation analysis (unlimited pages)
+   - Updated pricing
 
-7. **1151 Claim (VA Medical Malpractice)** - ₹7,999
+7. **1151 Claim (VA Medical Malpractice)** - $2,000
    - VA medical negligence claims
-   - Recently added
+   - Updated pricing
 
 ## Enhanced Content
 

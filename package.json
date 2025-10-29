@@ -1,5 +1,5 @@
 {
-  "name": "dr-kishan-bhalani-medical-services",
+  "name": "military-disability-nexus-services",
   "version": "1.0.0",
   "description": "HIPAA-compliant medical documentation services for veterans",
   "scripts": {
@@ -17,6 +17,6 @@
     "hipaa",
     "healthcare"
   ],
-  "author": "Dr. Kishan Bhalani",
+  "author": "Military Disability Nexus",
   "license": "MIT"
 }

@@ -22,9 +22,10 @@ SERVICES = [
             "Nexus opinion letters",
             "Rebuttal to VA denials",
             "Direct/secondary/aggravation analysis",
-            "Clear medical rationale"
+            "            "Clear medical rationale",
+            "Rush service: +$500 USD (36-48 hours)""
         ],
-        "basePriceInINR": 4999,
+        "basePriceInUSD": 1499,
         "duration": "7-10 business days",
         "category": "nexus-letter",
         "icon": "file-text",
@@ -46,15 +47,16 @@ SERVICES = [
     {
         "id": "2",
         "slug": "public-dbqs",
-        "title": "Public DBQs",
+        "title": "DBQs",
         "shortDescription": "Standardized disability questionnaires for VA claims",
         "fullDescription": "Disability Benefits Questionnaires (DBQs) are standardized medical examination forms used by the VA to evaluate disability claims. Our licensed physicians complete these forms based on current VA guidelines and your medical condition.",
         "features": [
             "Latest public VA DBQs",
             "Objective findings",
-            "Functional impact"
+            "            "Functional impact",
+            "Rush service: +$50 USD (36-48 hours)""
         ],
-        "basePriceInINR": 3999,
+        "basePriceInUSD": 249,
         "duration": "5-7 business days",
         "category": "dbq",
         "icon": "clipboard",
@@ -74,9 +76,10 @@ SERVICES = [
         "features": [
             "Physician evaluation",
             "ADL documentation",
-            "When clinically indicated"
+            "When clinically indicated",
+            "Rush service: +$500 USD (36-48 hours)"
         ],
-        "basePriceInINR": 5999,
+        "basePriceInUSD": 1999,
         "duration": "10-14 business days",
         "category": "aid-attendance",
         "icon": "heart-pulse",
@@ -98,7 +101,7 @@ SERVICES = [
             "Accurate symptom reporting",
             "Logbooks & lay tips"
         ],
-        "basePriceInINR": 2499,
+        "basePriceInUSD": 29,
         "duration": "Same day or next business day",
         "category": "coaching",
         "icon": "users",
@@ -121,7 +124,7 @@ SERVICES = [
             "Medical condition assessment",
             "Personalized recommendations"
         ],
-        "basePriceInINR": 3499,
+        "basePriceInUSD": 249,
         "duration": "1-hour consultation scheduled within 3-5 days",
         "category": "consultation",
         "icon": "users",
@@ -151,7 +154,7 @@ SERVICES = [
             "Timeline build",
             "Provider question set"
         ],
-        "basePriceInINR": 2999,
+        "basePriceInUSD": 99,
         "duration": "5-7 business days",
         "category": "review",
         "icon": "file-search",
@@ -174,7 +177,7 @@ SERVICES = [
             "Causation nexus opinions",
             "Standard of care evaluation"
         ],
-        "basePriceInINR": 7999,
+        "basePriceInUSD": 1999,
         "duration": "10-14 business days",
         "category": "malpractice",
         "icon": "alert-triangle",

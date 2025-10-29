@@ -99,7 +99,7 @@ class Service(BaseModel):
     shortDescription: str
     fullDescription: str
     features: List[str]
-    basePriceInINR: int
+    basePriceInUSD: int
     duration: str
     category: str
     icon: str
@@ -195,14 +195,16 @@ MOCK_SERVICES = [
         "slug": "nexus-rebuttal-letters",
         "title": "Nexus & Rebuttal Letters",
         "shortDescription": "Comprehensive medical opinions for claims and appeals",
-        "fullDescription": "Professional nexus and rebuttal letters that establish clear connections between your military service and medical conditions, or challenge unfavorable VA decisions. Our expert medical opinions provide the crucial evidence needed for both initial claims and appeals processes.",
+        "fullDescription": "Professional nexus and rebuttal letters that establish clear connections between your military service and medical conditions, or challenge unfavorable VA decisions. Our expert medical opinions provide the crucial evidence needed for both initial claims and appeals processes. One letter can cover up to 4 claims. Rush service available for 36-48 hour delivery.",
         "features": [
             "Nexus opinion letters",
-            "Rebuttal to VA denials",
+            "Rebuttal to VA denials", 
+            "Up to 4 claims per letter",
             "Direct/secondary/aggravation analysis",
-            "Clear medical rationale"
+            "Clear medical rationale",
+            "Rush service: +$500 USD (36-48 hours)"
         ],
-        "basePriceInINR": 4999,
+        "basePriceInUSD": 1499,
         "duration": "7-10 business days",
         "category": "nexus-letter",
         "icon": "file-text",
@@ -220,15 +222,16 @@ MOCK_SERVICES = [
     {
         "id": "2",
         "slug": "public-dbqs",
-        "title": "Public DBQs",
+        "title": "DBQs",
         "shortDescription": "Standardized disability questionnaires for VA claims",
-        "fullDescription": "Disability Benefits Questionnaires (DBQs) are standardized medical examination forms used by the VA to evaluate disability claims. Our licensed physicians complete these forms based on current VA guidelines and your medical condition.",
+        "fullDescription": "Disability Benefits Questionnaires (DBQs) are standardized medical examination forms used by the VA to evaluate disability claims. Our licensed physicians complete these forms based on current VA guidelines and your medical condition. Rush service available for 36-48 hour delivery.",
         "features": [
             "Latest public VA DBQs",
             "Objective findings",
-            "Functional impact"
+            "Functional impact",
+            "Rush service: +$50 USD (36-48 hours)"
         ],
-        "basePriceInINR": 3999,
+        "basePriceInUSD": 249,
         "duration": "5-7 business days",
         "category": "dbq",
         "icon": "clipboard",
@@ -244,13 +247,14 @@ MOCK_SERVICES = [
         "slug": "aid-attendance",
         "title": "Aid & Attendance (21-2680)",
         "shortDescription": "Enhanced pension benefits for veterans needing assistance",
-        "fullDescription": "Aid and Attendance is a benefit available to veterans and surviving spouses who require the regular assistance of another person. We provide comprehensive physician evaluations to support your A&A benefit claim.",
+        "fullDescription": "Aid and Attendance is a benefit available to veterans and surviving spouses who require the regular assistance of another person. We provide comprehensive physician evaluations to support your A&A benefit claim. Rush service available for 36-48 hour delivery.",
         "features": [
             "Physician evaluation",
             "ADL documentation",
-            "When clinically indicated"
+            "When clinically indicated",
+            "Rush service: +$500 USD (36-48 hours)"
         ],
-        "basePriceInINR": 5999,
+        "basePriceInUSD": 1999,
         "duration": "10-14 business days",
         "category": "aid-attendance",
         "icon": "heart-pulse",
@@ -272,7 +276,7 @@ MOCK_SERVICES = [
             "Accurate symptom reporting",
             "Logbooks & lay tips"
         ],
-        "basePriceInINR": 2499,
+        "basePriceInUSD": 29,
         "duration": "Same day or next business day",
         "category": "coaching",
         "icon": "users",
@@ -295,7 +299,7 @@ MOCK_SERVICES = [
             "Medical condition assessment",
             "Personalized recommendations"
         ],
-        "basePriceInINR": 3499,
+        "basePriceInUSD": 249,
         "duration": "1-hour consultation scheduled within 3-5 days",
         "category": "consultation",
         "icon": "users",
@@ -310,14 +314,15 @@ MOCK_SERVICES = [
         "id": "6",
         "slug": "record-review",
         "title": "Record Review",
-        "shortDescription": "Professional analysis of your medical documentation",
+        "shortDescription": "Professional analysis of your medical documentation (unlimited pages)",
         "fullDescription": "Our medical professionals review your service and medical records to identify conditions eligible for VA compensation, build a comprehensive timeline, and prepare targeted questions for your providers.",
         "features": [
-            "Service/med records synthesis",
+            "Unlimited pages review",
+            "Service/med records synthesis", 
             "Timeline build",
             "Provider question set"
         ],
-        "basePriceInINR": 2999,
+        "basePriceInUSD": 99,
         "duration": "5-7 business days",
         "category": "review",
         "icon": "file-search",
@@ -340,7 +345,7 @@ MOCK_SERVICES = [
             "Causation nexus opinions",
             "Standard of care evaluation"
         ],
-        "basePriceInINR": 7999,
+        "basePriceInUSD": 1999,
         "duration": "10-14 business days",
         "category": "malpractice",
         "icon": "alert-triangle",
@@ -626,7 +631,7 @@ async def create_service_order(slug: str, order_data: ServiceOrderCreate):
         customer_phone=order_data.customer_phone,
         order_details=order_data.order_details,
         status=OrderStatus.PENDING,
-        total_amount=service["basePriceInINR"],
+        total_amount=service["basePriceInUSD"],
         created_at=datetime.now(timezone.utc).isoformat(),
         estimated_completion=completion_date.isoformat(),
         notes=order_data.notes

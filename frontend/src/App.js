@@ -6,6 +6,7 @@ import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import AidAttendanceForm from './pages/AidAttendanceForm';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="blog/:slug" element={<BlogPost />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="aid-attendance-form" element={<AidAttendanceForm />} />
         </Route>
       </Routes>
     </BrowserRouter>

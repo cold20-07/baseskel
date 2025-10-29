@@ -1,4 +1,4 @@
-# Dr. Kishan Bhalani - Medical Documentation Services
+# Military Disability Nexus - Medical Documentation Services
 
 A modern, full-stack web application for veteran medical documentation services including nexus letters, DBQs, and consultation services.
 
@@ -66,13 +66,13 @@ A modern, full-stack web application for veteran medical documentation services 
 - **Compliance Monitoring**: Real-time compliance dashboard and reporting
 
 ### Services Offered (7 Total)
-1. Nexus & Rebuttal Letters - ₹4,999
-2. Public DBQs - ₹3,999
-3. Aid & Attendance (21-2680) - ₹5,999
-4. C&P Coaching - ₹2,499
-5. One-on-One Consultation with Expert - ₹3,499
-6. Record Review - ₹2,999
-7. 1151 Claim (VA Medical Malpractice) - ₹7,999
+1. Nexus Letters - $1,500
+2. DBQs - $250
+3. Aid & Attendance (21-2680) - $2,000
+4. C&P Coaching - $29
+5. Telehealth Consultation - $250
+6. Record Review - $100 (unlimited pages)
+7. 1151 Claim (VA Medical Malpractice) - $2,000
 
 ### Backend API Endpoints
 - `GET /api/services` - List all services
@@ -182,7 +182,7 @@ CREATE TABLE services (
     shortDescription TEXT NOT NULL,
     fullDescription TEXT NOT NULL,
     features JSONB NOT NULL DEFAULT '[]',
-    basePriceInINR INTEGER NOT NULL,
+    basePriceInUSD INTEGER NOT NULL,
     duration TEXT NOT NULL,
     category TEXT NOT NULL,
     icon TEXT NOT NULL,
@@ -300,7 +300,7 @@ Features intentionally left out of MVP that can be added later:
 
 ## 📝 Notes
 
-- All prices are in INR (Indian Rupees) with ₹ symbol
+- All prices are in USD (US Dollars) with $ symbol
 - Mock data includes 7 services and 3 blog posts
 - Contact form submissions are stored in Supabase
 - No authentication required for MVP
@@ -313,4 +313,4 @@ For questions or issues, please check the logs or contact support.
 
 ---
 
-**Dr. Kishan Bhalani - Professional Medical Documentation Services**
+**Military Disability Nexus - Professional Medical Documentation Services**
