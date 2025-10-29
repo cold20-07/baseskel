@@ -1,27 +1,19 @@
 {
   "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "backend/deploy_server.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "backend/deploy_server.py"
+      "source": "/api/(.*)",
+      "destination": "/api/backend/deploy_server"
     },
     {
-      "src": "/(.*)",
-      "dest": "backend/deploy_server.py"
+      "source": "/(.*)",
+      "destination": "/api/backend/deploy_server"
     }
   ],
   "functions": {
     "backend/deploy_server.py": {
-      "maxDuration": 30
+      "maxDuration": 30,
+      "runtime": "@vercel/python"
     }
   },
   "env": {
