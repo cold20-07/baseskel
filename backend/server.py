@@ -106,12 +106,10 @@ class RailwayHostFixMiddleware(BaseHTTPMiddleware):
         host = request.headers.get("host", "unknown")
         print(f"Incoming request - Host: {host}, Path: {request.url.path}")
         
-        # Allow Railway health checks and internal requests
-        if (host.endswith('.railway.app') or 
-            host.endswith('.railway.internal') or
-            host.startswith('baseskel-production') or
-            request.url.path in ['/health', '/api/health', '/docs']):
-            print(f"Allowing request from {host}")
+        # Always allow requests in Railway environment
+        railway_env = os.environ.get('RAILWAY_ENVIRONMENT_NAME')
+        if railway_env or host.endswith('.railway.app'):
+            print(f"Railway environment detected - allowing all requests")
         
         response = await call_next(request)
         return response
@@ -461,15 +459,9 @@ async def root_health_check():
 # Include the router in the main app
 app.include_router(api_router)
 
-# Add HIPAA-compliant middleware (order matters!) - only if HIPAA is available
-# Add Railway host fix middleware first
-app.add_middleware(RailwayHostFixMiddleware)
-
-if HIPAA_AVAILABLE:
-    app.add_middleware(HIPAASecurityMiddleware)
-    app.add_middleware(HIPAARateLimitMiddleware, calls_per_minute=100)
-
-# Railway-specific host configuration
+# RAILWAY HOST CONFIGURATION - MUST BE FIRST!
+allowed_hosts_env = os.environ.get('ALLOWED_HOSTS', '*')
+print(f"ALLOWED_HOSTS environment variable: {allowed_hosts_env}")
 railway_environment = os.environ.get('RAILWAY_ENVIRONMENT_NAME')
 is_production = os.environ.get('ENVIRONMENT') == 'production' or railway_environment is not None
 
@@ -477,46 +469,26 @@ print(f"Environment check - ENVIRONMENT: {os.environ.get('ENVIRONMENT')}")
 print(f"Railway environment: {railway_environment}")
 print(f"Is production: {is_production}")
 
-if is_production:
-    # Get allowed hosts with Railway-friendly defaults
-    allowed_hosts_env = os.environ.get('ALLOWED_HOSTS', '*')
-    print(f"ALLOWED_HOSTS env var: {allowed_hosts_env}")
-    
-    # Always allow Railway domains and common patterns
-    default_hosts = [
-        'baseskel-production.up.railway.app',
-        '*.up.railway.app',
-        '*.railway.app', 
-        'localhost',
-        '127.0.0.1',
-        '0.0.0.0'
-    ]
-    
-    if allowed_hosts_env == '*':
-        # Use wildcard for maximum compatibility
-        cleaned_hosts = ['*']
-        print("Using wildcard (*) for all hosts")
-    else:
-        # Parse specific hosts and add Railway defaults
-        user_hosts = [h.strip() for h in allowed_hosts_env.split(',') if h.strip()]
-        cleaned_hosts = list(set(user_hosts + default_hosts))
-        print(f"Using specific hosts: {cleaned_hosts}")
-    
-    # Add Railway internal IPs and IPv6 patterns
-    if '*' not in cleaned_hosts:
-        railway_internal = [
-            '[::1]',  # IPv6 localhost
-            '*.railway.internal',
-            '10.*',   # Railway internal network
-            '172.*',  # Docker internal
-            '192.168.*'  # Local network
-        ]
-        cleaned_hosts.extend(railway_internal)
-    
-    print(f"Final allowed hosts: {cleaned_hosts}")
-    app.add_middleware(TrustedHostMiddleware, allowed_hosts=cleaned_hosts)
+# RAILWAY COMPATIBILITY - DISABLE HOST VALIDATION
+railway_env = os.environ.get('RAILWAY_ENVIRONMENT_NAME')
+is_railway = railway_env is not None or 'railway.app' in os.environ.get('RAILWAY_PUBLIC_DOMAIN', '')
+
+print(f"Railway environment detected: {is_railway}")
+print("COMPLETELY DISABLING TrustedHostMiddleware for Railway compatibility")
+
+# Add Railway host fix middleware first
+app.add_middleware(RailwayHostFixMiddleware)
+
+if HIPAA_AVAILABLE:
+    app.add_middleware(HIPAASecurityMiddleware)
+    app.add_middleware(HIPAARateLimitMiddleware, calls_per_minute=100)
+
+# SKIP TrustedHostMiddleware entirely for Railway
+if not is_railway:
+    print("Local development - adding basic host validation")
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=["localhost", "127.0.0.1", "0.0.0.0"])
 else:
-    print("Development mode - TrustedHostMiddleware disabled")
+    print("Railway deployment - skipping host validation completely")
 
 # CORS middleware (more restrictive for HIPAA)
 cors_origins = os.environ.get('CORS_ORIGINS', 'http://localhost:3000').split(',')

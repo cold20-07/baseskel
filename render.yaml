@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: baseskel-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: |
+      cd backend &&
+      pip install -r requirements.txt
+    startCommand: |
+      cd backend &&
+      python run_server.py
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: ALLOWED_HOSTS
+        value: "*"
+      - key: PORT
+        value: "10000"
+      - key: CORS_ORIGINS
+        value: "https://base-skel.netlify.app,http://localhost:3000"
+      - key: SUPABASE_URL
+        sync: false  # Set manually in Render dashboard
+      - key: SUPABASE_KEY
+        sync: false  # Set manually in Render dashboard
