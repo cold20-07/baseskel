@@ -2,7 +2,7 @@
 Dockerfile generator with reliable pip installation
 """
 
-from typing import List, Optional
+from typing import List
 
 
 def generate_dockerfile(

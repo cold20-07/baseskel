@@ -5,9 +5,8 @@ Command-line interface for Docker Pip Utils
 
 import argparse
 import sys
-import os
 from .installer import PipInstaller
-from .validator import print_environment_report, validate_environment
+from .validator import print_environment_report
 from .dockerfile_generator import generate_dockerfile, generate_nixpacks_toml, generate_railway_json
 
 
@@ -23,7 +22,7 @@ def main():
                                help='Upgrade pip before installing packages')
     
     # Validate command
-    validate_parser = subparsers.add_parser('validate', help='Validate environment')
+    subparsers.add_parser('validate', help='Validate environment')
     
     # Generate command
     generate_parser = subparsers.add_parser('generate', help='Generate configuration files')

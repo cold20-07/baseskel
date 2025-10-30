@@ -3,7 +3,8 @@
 Example usage of Docker Pip Utils
 """
 
-from docker_pip_utils import PipInstaller, validate_environment, print_environment_report
+import os
+from docker_pip_utils import PipInstaller, print_environment_report
 from docker_pip_utils import generate_dockerfile, generate_nixpacks_toml, generate_railway_json
 
 
@@ -27,7 +28,6 @@ def main():
             installer.upgrade_pip()
             
             # Install packages (if requirements.txt exists)
-            import os
             if os.path.exists("backend/requirements.txt"):
                 installer.install_packages("backend/requirements.txt")
         

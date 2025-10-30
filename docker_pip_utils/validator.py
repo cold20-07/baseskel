@@ -5,7 +5,7 @@ Environment validation utilities for Docker pip installations
 import subprocess
 import sys
 import os
-from typing import Dict, List, Tuple
+from typing import Dict, Tuple
 
 
 def check_pip_availability() -> Tuple[bool, str]:
@@ -24,7 +24,7 @@ def check_pip_availability() -> Tuple[bool, str]:
         return False, str(e)
 
 
-def validate_environment() -> Dict[str, any]:
+def validate_environment() -> Dict[str, str]:
     """
     Validate the current environment for pip installation
     Returns a dictionary with validation results

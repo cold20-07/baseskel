@@ -6,7 +6,6 @@ import subprocess
 import sys
 import urllib.request
 import os
-from typing import List, Optional
 
 
 class DockerPipError(Exception):
