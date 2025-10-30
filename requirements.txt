@@ -1,43 +1,16 @@
 # Dr. Kishan Bhalani Medical Documentation Services
-# Production requirements for Railway deployment
+# Minimal requirements for Railway deployment
 
 # Core FastAPI and server
-fastapi==0.115.6
-uvicorn[standard]==0.32.1
-gunicorn==23.0.0
+fastapi>=0.100.0
+uvicorn[standard]>=0.20.0
 
-# Database and storage
-supabase==2.10.0
-psycopg2-binary==2.9.10
+# Database
+supabase>=2.0.0
 
-# Security and validation
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
-python-multipart==0.0.20
-email-validator==2.2.0
+# Environment and validation
+python-dotenv>=1.0.0
+pydantic[email]>=2.0.0
 
-# Environment and configuration
-python-dotenv==1.0.1
-pydantic[email]==2.10.4
-pydantic-settings==2.7.0
-
-# HTTP and networking
-httpx==0.28.1
-requests==2.32.3
-
-# Cryptography for HIPAA compliance
-cryptography==44.0.0
-
-# File handling
-aiofiles==24.1.0
-python-magic==0.4.27
-
-# Date and time handling
-python-dateutil==2.9.0
-
-# Logging and monitoring
-structlog==24.4.0
-
-# Development and testing (optional)
-pytest==8.3.4
-pytest-asyncio==0.24.0
+# Basic dependencies
+requests>=2.28.0
