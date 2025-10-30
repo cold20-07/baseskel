@@ -447,8 +447,34 @@ if HIPAA_AVAILABLE:
 
 # Add trusted host middleware for production
 if os.environ.get('ENVIRONMENT') == 'production':
-    allowed_hosts = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
-    app.add_middleware(TrustedHostMiddleware, allowed_hosts=allowed_hosts)
+    allowed_hosts = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+    
+    # Clean and prepare hosts
+    cleaned_hosts = []
+    for host in allowed_hosts:
+        host = host.strip()
+        if host == '*':
+            cleaned_hosts = ['*']
+            break
+        cleaned_hosts.append(host)
+    
+    # Add Railway-specific patterns if not using wildcard
+    if '*' not in cleaned_hosts:
+        railway_hosts = [
+            'baseskel-production.up.railway.app',
+            '*.up.railway.app', 
+            '*.railway.app',
+            'localhost',
+            '127.0.0.1'
+        ]
+        for rh in railway_hosts:
+            if rh not in cleaned_hosts:
+                cleaned_hosts.append(rh)
+    
+    print(f"Allowed hosts: {cleaned_hosts}")
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=cleaned_hosts)
+else:
+    print("Development mode - TrustedHostMiddleware disabled")
 
 # CORS middleware (more restrictive for HIPAA)
 cors_origins = os.environ.get('CORS_ORIGINS', 'http://localhost:3000').split(',')
