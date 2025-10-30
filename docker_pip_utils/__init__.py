@@ -11,7 +11,7 @@ __author__ = "Docker Pip Utils"
 
 __all__ = [
     "PipInstaller",
-    "DockerPipError", 
+    "DockerPipError",
     "validate_environment",
     "check_pip_availability",
     "generate_dockerfile"

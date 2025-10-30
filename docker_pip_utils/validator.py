@@ -14,8 +14,8 @@ def check_pip_availability() -> Tuple[bool, str]:
     Returns (is_available, details)
     """
     try:
-        result = subprocess.run([sys.executable, "-m", "pip", "--version"], 
-                              capture_output=True, text=True)
+        result = subprocess.run([sys.executable, "-m", "pip", "--version"],
+                                                            capture_output=True, text=True)
         if result.returncode == 0:
             return True, result.stdout.strip()
         else:
@@ -39,20 +39,20 @@ def validate_environment() -> Dict[str, str]:
         "apt_available": False,
         "environment_type": "unknown"
     }
-    
+
     # Check pip availability
     pip_available, pip_details = check_pip_availability()
     results["pip_available"] = pip_available
     results["pip_details"] = pip_details
-    
+
     # Check ensurepip availability
     try:
-        result = subprocess.run([sys.executable, "-m", "ensurepip", "--help"], 
-                              capture_output=True, text=True)
+        result = subprocess.run([sys.executable, "-m", "ensurepip", "--help"],
+                                                            capture_output=True, text=True)
         results["ensurepip_available"] = result.returncode == 0
     except Exception:
         results["ensurepip_available"] = False
-    
+
     # Check internet access
     try:
         import urllib.request
@@ -60,14 +60,14 @@ def validate_environment() -> Dict[str, str]:
         results["internet_access"] = True
     except Exception:
         results["internet_access"] = False
-    
+
     # Check apt availability (Ubuntu/Debian)
     try:
         result = subprocess.run(["which", "apt-get"], capture_output=True)
         results["apt_available"] = result.returncode == 0
     except Exception:
         results["apt_available"] = False
-    
+
     # Detect environment type
     if "/nix/store" in sys.executable:
         results["environment_type"] = "nix"
@@ -77,32 +77,32 @@ def validate_environment() -> Dict[str, str]:
         results["environment_type"] = "docker"
     elif results["apt_available"]:
         results["environment_type"] = "ubuntu/debian"
-    
+
     return results
 
 
 def print_environment_report():
     """Print a detailed environment validation report"""
     results = validate_environment()
-    
+
     print("🔍 Docker Pip Environment Validation Report")
     print("=" * 50)
-    
+
     print(f"Python Version: {results['python_version'].split()[0]}")
     print(f"Python Executable: {results['python_executable']}")
     print(f"Environment Type: {results['environment_type']}")
-    
+
     print("\n📦 Pip Status:")
     if results["pip_available"]:
         print(f"✅ pip available: {results['pip_details']}")
     else:
         print(f"❌ pip not available: {results['pip_details']}")
-    
+
     print("\n🛠️ Available Installation Methods:")
     print(f"{'✅' if results['ensurepip_available'] else '❌'} ensurepip")
     print(f"{'✅' if results['internet_access'] else '❌'} Internet access (get-pip.py)")
     print(f"{'✅' if results['apt_available'] else '❌'} apt-get (Ubuntu/Debian)")
-    
+
     print("\n💡 Recommendations:")
     if results["pip_available"]:
         print("✅ pip is working - no action needed")
@@ -117,5 +117,5 @@ def print_environment_report():
         print("💡 Use: apt-get update && apt-get install -y python3-pip")
     else:
         print("❌ No viable pip installation method found")
-    
+
     print("=" * 50)
