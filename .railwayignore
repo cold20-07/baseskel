@@ -1,5 +1,8 @@
-# Force Railway to use our nixpacks.toml configuration
-# Ignore files that might trigger different auto-detection
+# Force Railway to use Dockerfile instead of nixpacks auto-detection
+# Ignore files that might trigger nixpacks detection
+nixpacks.toml
+nixpacks.json
+.nixpacks/
 temp_python_files/
 *.pyc
 __pycache__/
