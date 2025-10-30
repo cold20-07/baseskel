@@ -1,5 +1,5 @@
 # Dr. Kishan Bhalani Medical Documentation Services
-# Minimal requirements for Railway deployment
+# Requirements for robust deployment with monitoring
 
 # Core FastAPI and server
 fastapi>=0.100.0
@@ -12,5 +12,8 @@ supabase>=2.0.0
 python-dotenv>=1.0.0
 pydantic[email]>=2.0.0
 
-# Basic dependencies
+# HTTP client for health checks
 requests>=2.28.0
+
+# System monitoring (optional but recommended)
+psutil>=5.9.0

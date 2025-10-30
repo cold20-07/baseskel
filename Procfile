@@ -1,1 +1,1 @@
-web: python k8s_server.py
+web: python robust_server.py
