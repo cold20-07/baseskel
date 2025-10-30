@@ -4,10 +4,10 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python robust_server.py",
+    "startCommand": "cd backend && python run_server.py",
+    "healthcheckPath": "/api/health",
+    "healthcheckTimeout": 100,
     "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 5,
-    "healthcheckPath": "/health",
-    "healthcheckTimeout": 30
+    "restartPolicyMaxRetries": 10
   }
 }

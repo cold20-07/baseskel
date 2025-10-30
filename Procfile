@@ -1,1 +1,1 @@
-web: python robust_server.py
+web: cd backend && python run_server.py
