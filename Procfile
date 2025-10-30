@@ -1,1 +1,0 @@
-web: python3 backend/run_server.py
