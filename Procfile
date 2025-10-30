@@ -1,1 +1,1 @@
-web: python simple_server.py
+web: python k8s_server.py

@@ -1,0 +1,138 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dr-kishan-medical-services
+  labels:
+    app: dr-kishan-medical-services
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dr-kishan-medical-services
+  template:
+    metadata:
+      labels:
+        app: dr-kishan-medical-services
+    spec:
+      containers:
+      - name: medical-services
+        image: your-registry/dr-kishan-medical-services:latest
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: PORT
+          value: "8000"
+        - name: HOST
+          value: "0.0.0.0"
+        - name: SUPABASE_URL
+          value: "https://cwjsyxxzdwphhlpppxau.supabase.co"
+        - name: SUPABASE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: supabase-secret
+              key: supabase-key
+        - name: HIPAA_ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: hipaa-secret
+              key: encryption-key
+        - name: CORS_ORIGINS
+          value: "*"
+        - name: ENVIRONMENT
+          value: "production"
+        # Health check configuration
+        livenessProbe:
+          httpGet:
+            path: /alive
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dr-kishan-medical-services
+  labels:
+    app: dr-kishan-medical-services
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  selector:
+    app: dr-kishan-medical-services
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dr-kishan-medical-services
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - your-domain.com
+    secretName: tls-secret
+  rules:
+  - host: your-domain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dr-kishan-medical-services
+            port:
+              number: 80
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: supabase-secret
+type: Opaque
+data:
+  # Base64 encoded Supabase key
+  supabase-key: ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5TG1WNVNuTnpJblZ6Y0dGaVlYTmxJaXdpY21WbUlqb2lZM2RxYzNsNGVIcGtkM0JvYUd4d2NIQjRZWFVpTENCaWNtOXNaU0k2SW1GdWIyNGlMQ0pwWVhRaU9qRTNOakUyTXpBMk1UVXNJbVY0Y0NJNk1qQTNOekl3TmpZMk1UVjkuN3FtUnhGaFpyX3JId0tScF9ZYUQzSEI0RDMwZmVjbFkzeFBpcG9KdnIw
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hipaa-secret
+type: Opaque
+data:
+  # Base64 encoded HIPAA encryption key
+  encryption-key: Ync3WTlQM3c0UUpGVkphdE1xdTgrZ3Y4bVJsV21saEFCN0ZITHZSOGM4TT0=
