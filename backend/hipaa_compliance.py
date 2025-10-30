@@ -9,9 +9,6 @@ This module implements HIPAA compliance measures including:
 - Security measures
 """
 
-import hashlib
-import hmac
-import secrets
 import logging
 from datetime import datetime, timezone
 from typing import Dict, Any, Optional
@@ -20,7 +17,6 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import base64
 import os
-import json
 from pydantic import BaseModel
 from enum import Enum
 
@@ -57,11 +53,11 @@ class AuditLog(BaseModel):
 
 class HIPAAEncryption:
     """HIPAA-compliant encryption utilities"""
-    
+
     def __init__(self, password: str = None):
         if password is None:
             password = os.environ.get('HIPAA_ENCRYPTION_KEY', 'default-key-change-in-production')
-        
+
         # Generate key from password
         password_bytes = password.encode()
         salt = b'hipaa_salt_2024'  # In production, use random salt per encryption
@@ -73,13 +69,13 @@ class HIPAAEncryption:
         )
         key = base64.urlsafe_b64encode(kdf.derive(password_bytes))
         self.cipher_suite = Fernet(key)
-    
+
     def encrypt_phi(self, data: str) -> str:
         """Encrypt PHI data"""
         if not data:
             return data
         return self.cipher_suite.encrypt(data.encode()).decode()
-    
+
     def decrypt_phi(self, encrypted_data: str) -> str:
         """Decrypt PHI data"""
         if not encrypted_data:
@@ -89,7 +85,7 @@ class HIPAAEncryption:
         except Exception as e:
             logging.error(f"Failed to decrypt PHI data: {e}")
             raise ValueError("Invalid encrypted data")
-    
+
     def hash_phi(self, data: str) -> str:
         """Create irreversible hash of PHI for indexing"""
         if not data:
@@ -99,11 +95,11 @@ class HIPAAEncryption:
 
 class HIPAAAuditLogger:
     """HIPAA-compliant audit logging"""
-    
+
     def __init__(self, supabase_client):
         self.supabase = supabase_client
         self.logger = logging.getLogger('hipaa_audit')
-        
+
         # Configure audit logger
         handler = logging.FileHandler('hipaa_audit.log')
         formatter = logging.Formatter(
@@ -112,7 +108,7 @@ class HIPAAAuditLogger:
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
         self.logger.setLevel(logging.INFO)
-    
+
     def log_event(self, audit_log: AuditLog):
         """Log HIPAA audit event"""
         try:
@@ -120,23 +116,23 @@ class HIPAAAuditLogger:
             log_message = f"Event: {audit_log.event_type} | User: {audit_log.user_email} | " \
                          f"IP: {audit_log.ip_address} | Action: {audit_log.action} | " \
                          f"Outcome: {audit_log.outcome} | PHI: {audit_log.phi_involved}"
-            
+
             if audit_log.outcome == "FAILURE":
                 self.logger.error(log_message)
             elif audit_log.outcome == "WARNING":
                 self.logger.warning(log_message)
             else:
                 self.logger.info(log_message)
-            
+
             # Store in database for compliance reporting
             audit_data = audit_log.model_dump()
             self.supabase.table('hipaa_audit_logs').insert(audit_data).execute()
-            
+
         except Exception as e:
             # Critical: audit logging must not fail
             self.logger.critical(f"AUDIT LOGGING FAILED: {e}")
-    
-    def log_phi_access(self, user_email: str, resource_type: str, resource_id: str, 
+
+    def log_phi_access(self, user_email: str, resource_type: str, resource_id: str,
                       ip_address: str, user_agent: str = None):
         """Log PHI access event"""
         audit_log = AuditLog(
@@ -152,8 +148,8 @@ class HIPAAAuditLogger:
             phi_involved=True
         )
         self.log_event(audit_log)
-    
-    def log_unauthorized_access(self, ip_address: str, attempted_resource: str, 
+
+    def log_unauthorized_access(self, ip_address: str, attempted_resource: str,
                               user_agent: str = None):
         """Log unauthorized access attempt"""
         audit_log = AuditLog(
@@ -170,7 +166,7 @@ class HIPAAAuditLogger:
 
 class HIPAAValidator:
     """HIPAA compliance validation utilities"""
-    
+
     @staticmethod
     def is_phi_data(data: Dict[str, Any]) -> bool:
         """Check if data contains PHI"""
@@ -179,10 +175,10 @@ class HIPAAValidator:
             'date_of_birth', 'medical_condition', 'diagnosis', 'treatment',
             'medication', 'doctor_name', 'hospital_name', 'insurance_info'
         }
-        
+
         data_keys = set(str(key).lower() for key in data.keys())
         return bool(phi_fields.intersection(data_keys))
-    
+
     @staticmethod
     def validate_minimum_necessary(requested_fields: list, user_role: str) -> list:
         """Implement minimum necessary standard"""
@@ -192,14 +188,14 @@ class HIPAAValidator:
             'staff': ['name', 'email', 'phone'],
             'patient': ['name', 'email', 'phone', 'medical_condition']  # Own data only
         }
-        
+
         allowed_fields = role_permissions.get(user_role, [])
-        
+
         if '*' in allowed_fields:
             return requested_fields
-        
+
         return [field for field in requested_fields if field in allowed_fields]
-    
+
     @staticmethod
     def sanitize_phi_for_logging(data: Dict[str, Any]) -> Dict[str, Any]:
         """Remove PHI from data for safe logging"""
@@ -207,20 +203,20 @@ class HIPAAValidator:
             'name', 'email', 'phone', 'address', 'ssn', 'medical_record_number',
             'date_of_birth', 'medical_condition', 'diagnosis', 'treatment'
         }
-        
+
         sanitized = {}
         for key, value in data.items():
             if key.lower() in phi_fields:
                 sanitized[key] = "[PHI_REDACTED]"
             else:
                 sanitized[key] = value
-        
+
         return sanitized
 
 
 class HIPAASecurityHeaders:
     """HIPAA-compliant security headers"""
-    
+
     @staticmethod
     def get_security_headers() -> Dict[str, str]:
         """Get HIPAA-compliant security headers"""
@@ -240,17 +236,17 @@ class HIPAASecurityHeaders:
 
 class HIPAADataRetention:
     """HIPAA data retention and disposal"""
-    
+
     def __init__(self, supabase_client):
         self.supabase = supabase_client
-    
-    def schedule_data_deletion(self, table_name: str, record_id: str, 
+
+    def schedule_data_deletion(self, table_name: str, record_id: str,
                              retention_years: int = 6):
         """Schedule data for deletion per HIPAA retention requirements"""
         deletion_date = datetime.now(timezone.utc).replace(
             year=datetime.now().year + retention_years
         ).isoformat()
-        
+
         retention_record = {
             'table_name': table_name,
             'record_id': record_id,
@@ -258,20 +254,20 @@ class HIPAADataRetention:
             'created_at': datetime.now(timezone.utc).isoformat(),
             'status': 'scheduled'
         }
-        
+
         self.supabase.table('hipaa_data_retention').insert(retention_record).execute()
-    
+
     def execute_scheduled_deletions(self):
         """Execute scheduled data deletions"""
         current_date = datetime.now(timezone.utc).isoformat()
-        
+
         # Get records scheduled for deletion
         response = self.supabase.table('hipaa_data_retention')\
             .select('*')\
             .eq('status', 'scheduled')\
             .lte('scheduled_deletion_date', current_date)\
             .execute()
-        
+
         for record in response.data:
             try:
                 # Delete the actual data
@@ -279,15 +275,15 @@ class HIPAADataRetention:
                     .delete()\
                     .eq('id', record['record_id'])\
                     .execute()
-                
+
                 # Mark retention record as completed
                 self.supabase.table('hipaa_data_retention')\
                     .update({'status': 'completed', 'deleted_at': current_date})\
                     .eq('id', record['id'])\
                     .execute()
-                
+
                 logging.info(f"HIPAA: Deleted record {record['record_id']} from {record['table_name']}")
-                
+
             except Exception as e:
                 logging.error(f"HIPAA: Failed to delete record {record['record_id']}: {e}")
 

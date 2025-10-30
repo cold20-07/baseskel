@@ -256,25 +256,25 @@ BLOG_POSTS = [
 
 def seed_database():
     print("Starting database seeding...")
-    
+
     try:
         # Clear existing data
         supabase.table('services').delete().neq('id', '').execute()
         supabase.table('blog_posts').delete().neq('id', '').execute()
         print("Cleared existing data")
-        
+
         # Insert services
         if SERVICES:
             response = supabase.table('services').insert(SERVICES).execute()
             print(f"Inserted {len(SERVICES)} services")
-        
+
         # Insert blog posts
         if BLOG_POSTS:
             response = supabase.table('blog_posts').insert(BLOG_POSTS).execute()
             print(f"Inserted {len(BLOG_POSTS)} blog posts")
-        
+
         print("Database seeding completed!")
-        
+
     except Exception as e:
         print(f"Error seeding database: {e}")
         print("Make sure your Supabase tables are created with the correct schema.")

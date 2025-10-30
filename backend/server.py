@@ -15,7 +15,7 @@ import uuid
 from datetime import datetime, timezone
 try:
     from hipaa_compliance import (
-        HIPAAAuditLogger, HIPAAValidator, HIPAASecurityHeaders, 
+        HIPAAAuditLogger, HIPAAValidator, HIPAASecurityHeaders,
         HIPAADataRetention, encryption, AuditEventType
     )
     HIPAA_AVAILABLE = True
@@ -29,7 +29,7 @@ try:
 except ImportError as e:
     print(f"File handler not available: {e}")
     FILE_HANDLER_AVAILABLE = False
-    
+
     # Define FileUploadResponse as fallback
     class FileUploadResponse(BaseModel):
         id: str
@@ -98,12 +98,12 @@ api_router = APIRouter(prefix="/api")
 # ===== HIPAA MIDDLEWARE =====
 class HIPAASecurityMiddleware(BaseHTTPMiddleware):
     """HIPAA-compliant security middleware"""
-    
+
     async def dispatch(self, request: Request, call_next):
         # Get client IP
         client_ip = request.client.host
         user_agent = request.headers.get("user-agent", "")
-        
+
         # Log system access (if audit logger is available)
         if audit_logger and HIPAA_AVAILABLE:
             try:
@@ -121,40 +121,40 @@ class HIPAASecurityMiddleware(BaseHTTPMiddleware):
             except Exception as e:
                 # Silently fail if audit logging is not available
                 pass
-        
+
         # Process request
         response = await call_next(request)
-        
+
         # Add HIPAA security headers
         for header, value in security_headers.get_security_headers().items():
             response.headers[header] = value
-        
+
         return response
 
 
 class HIPAARateLimitMiddleware(BaseHTTPMiddleware):
     """Rate limiting middleware for HIPAA compliance"""
-    
+
     def __init__(self, app, calls_per_minute: int = 60):
         super().__init__(app)
         self.calls_per_minute = calls_per_minute
         self.requests = {}
-    
+
     async def dispatch(self, request: Request, call_next):
         client_ip = request.client.host
         current_time = datetime.now()
-        
+
         # Clean old requests
         cutoff_time = current_time.timestamp() - 60
         self.requests = {
             ip: [req_time for req_time in times if req_time > cutoff_time]
             for ip, times in self.requests.items()
         }
-        
+
         # Check rate limit
         if client_ip not in self.requests:
             self.requests[client_ip] = []
-        
+
         if len(self.requests[client_ip]) >= self.calls_per_minute:
             # Log potential abuse (if audit logger is available)
             if audit_logger and HIPAA_AVAILABLE:
@@ -172,7 +172,7 @@ class HIPAARateLimitMiddleware(BaseHTTPMiddleware):
                 except Exception:
                     pass
             raise HTTPException(status_code=429, detail="Rate limit exceeded")
-        
+
         self.requests[client_ip].append(current_time.timestamp())
         return await call_next(request)
 
@@ -269,7 +269,7 @@ async def api_health_check():
 async def get_services():
     if not SUPABASE_AVAILABLE or not supabase:
         raise HTTPException(status_code=503, detail="Database service unavailable")
-    
+
     try:
         response = supabase.table('services').select('*').execute()
         return response.data
@@ -282,7 +282,7 @@ async def get_services():
 async def get_service_by_slug(slug: str):
     if not SUPABASE_AVAILABLE or not supabase:
         raise HTTPException(status_code=503, detail="Database service unavailable")
-    
+
     try:
         response = supabase.table('services').select('*').eq('slug', slug).execute()
         if not response.data:
@@ -303,17 +303,17 @@ async def get_blog_posts(
 ):
     if not SUPABASE_AVAILABLE or not supabase:
         raise HTTPException(status_code=503, detail="Database service unavailable")
-    
+
     try:
         query = supabase.table('blog_posts').select('*')
-        
+
         if category:
             query = query.eq('category', category)
-        
+
         if q:
             # Supabase uses ilike for case-insensitive search
             query = query.or_(f'title.ilike.%{q}%,excerpt.ilike.%{q}%')
-        
+
         query = query.limit(limit)
         response = query.execute()
         return response.data
@@ -326,7 +326,7 @@ async def get_blog_posts(
 async def get_blog_post(slug: str):
     if not SUPABASE_AVAILABLE or not supabase:
         raise HTTPException(status_code=503, detail="Database service unavailable")
-    
+
     try:
         response = supabase.table('blog_posts').select('*').eq('slug', slug).execute()
         if not response.data:
@@ -343,10 +343,10 @@ async def get_blog_post(slug: str):
 async def create_contact(contact_data: ContactCreate, request: Request):
     try:
         contact_dict = contact_data.model_dump()
-        
+
         # Check if data contains PHI
         contains_phi = validator.is_phi_data(contact_dict)
-        
+
         # Encrypt PHI fields
         if contains_phi:
             if contact_dict.get('name'):
@@ -355,19 +355,19 @@ async def create_contact(contact_data: ContactCreate, request: Request):
                 contact_dict['email'] = encryption.encrypt_phi(contact_dict['email'])
             if contact_dict.get('phone'):
                 contact_dict['phone'] = encryption.encrypt_phi(contact_dict['phone'])
-        
+
         contact_obj = Contact(
             id=str(uuid.uuid4()),
             **contact_dict,
             createdAt=datetime.now(timezone.utc).isoformat()
         )
-        
+
         # Insert into database
         response = supabase.table('contacts').insert(contact_obj.model_dump()).execute()
-        
+
         # Schedule for data retention (6 years for medical records)
         data_retention.schedule_data_deletion('contacts', contact_obj.id, retention_years=6)
-        
+
         # Log PHI creation
         if contains_phi:
             from hipaa_compliance import AuditLog
@@ -383,7 +383,7 @@ async def create_contact(contact_data: ContactCreate, request: Request):
                 phi_involved=True
             )
             audit_logger.log_event(audit_log)
-        
+
         # Return decrypted data for response (in production, limit based on user role)
         response_obj = contact_obj.model_copy()
         if contains_phi:
@@ -393,14 +393,14 @@ async def create_contact(contact_data: ContactCreate, request: Request):
                 response_obj.email = encryption.decrypt_phi(response_obj.email)
             if response_obj.phone:
                 response_obj.phone = encryption.decrypt_phi(response_obj.phone)
-        
+
         return response_obj
-        
+
     except Exception as e:
         # Log error without PHI
         sanitized_data = validator.sanitize_phi_for_logging(contact_dict)
         logger.error(f"Error creating contact: {e}, Data: {sanitized_data}")
-        
+
         # Log failed PHI creation attempt
         from hipaa_compliance import AuditLog
         audit_log = AuditLog(
@@ -415,7 +415,7 @@ async def create_contact(contact_data: ContactCreate, request: Request):
             details={'error': str(e)}
         )
         audit_logger.log_event(audit_log)
-        
+
         raise HTTPException(status_code=500, detail="Error creating contact")
 
 
@@ -482,24 +482,24 @@ async def get_audit_logs(
         # In production, verify admin role
         # if not current_user or current_user.role != 'admin':
         #     raise HTTPException(status_code=403, detail="Admin access required")
-        
+
         query = supabase.table('hipaa_audit_logs').select('*')
-        
+
         if event_type:
             query = query.eq('event_type', event_type)
         if start_date:
             query = query.gte('timestamp', start_date)
         if end_date:
             query = query.lte('timestamp', end_date)
-        
+
         query = query.order('timestamp', desc=True).limit(limit)
         response = query.execute()
-        
+
         return {
             "audit_logs": response.data,
             "total": len(response.data)
         }
-        
+
     except Exception as e:
         logger.error(f"Error fetching audit logs: {e}")
         raise HTTPException(status_code=500, detail="Error fetching audit logs")
@@ -512,15 +512,15 @@ async def get_compliance_summary(current_user = Depends(get_current_user)):
         # In production, verify admin role
         # if not current_user or current_user.role != 'admin':
         #     raise HTTPException(status_code=403, detail="Admin access required")
-        
+
         # Get compliance summary from view
         response = supabase.rpc('get_hipaa_compliance_summary').execute()
-        
+
         return {
             "compliance_summary": response.data,
             "generated_at": datetime.now(timezone.utc).isoformat()
         }
-        
+
     except Exception as e:
         logger.error(f"Error fetching compliance summary: {e}")
         raise HTTPException(status_code=500, detail="Error fetching compliance summary")
@@ -533,9 +533,9 @@ async def execute_data_retention(current_user = Depends(get_current_user)):
         # In production, verify admin role
         # if not current_user or current_user.role != 'admin':
         #     raise HTTPException(status_code=403, detail="Admin access required")
-        
+
         data_retention.execute_scheduled_deletions()
-        
+
         from hipaa_compliance import AuditLog
         audit_log = AuditLog(
             timestamp=datetime.now(timezone.utc).isoformat(),
@@ -546,9 +546,9 @@ async def execute_data_retention(current_user = Depends(get_current_user)):
             phi_involved=True
         )
         audit_logger.log_event(audit_log)
-        
+
         return {"message": "Data retention executed successfully"}
-        
+
     except Exception as e:
         logger.error(f"Error executing data retention: {e}")
         raise HTTPException(status_code=500, detail="Error executing data retention")
@@ -565,7 +565,7 @@ async def report_breach_incident(
         # In production, verify admin role
         # if not current_user or current_user.role != 'admin':
         #     raise HTTPException(status_code=403, detail="Admin access required")
-        
+
         breach_record = {
             'id': str(uuid.uuid4()),
             'incident_date': incident_data.get('incident_date'),
@@ -578,9 +578,9 @@ async def report_breach_incident(
             'severity': incident_data.get('severity', 'medium'),
             'status': 'investigating'
         }
-        
+
         response = supabase.table('hipaa_breach_incidents').insert(breach_record).execute()
-        
+
         # Log the breach report
         from hipaa_compliance import AuditLog
         audit_log = AuditLog(
@@ -595,9 +595,9 @@ async def report_breach_incident(
             phi_involved=True
         )
         audit_logger.log_event(audit_log)
-        
+
         return {"message": "Breach incident reported successfully", "incident_id": breach_record['id']}
-        
+
     except Exception as e:
         logger.error(f"Error reporting breach incident: {e}")
         raise HTTPException(status_code=500, detail="Error reporting breach incident")
@@ -638,7 +638,7 @@ if FILE_HANDLER_AVAILABLE and file_handler:
     async def download_file(file_id: str, request: Request):
         """Download a file"""
         content, filename, mime_type = await file_handler.download_file(file_id, request)
-        
+
         return Response(
             content=content,
             media_type=mime_type,
@@ -670,15 +670,15 @@ else:
     @api_router.get("/files/{file_id}")
     async def get_file_info_disabled(file_id: str):
         raise HTTPException(status_code=503, detail="File service not available")
-    
+
     @api_router.get("/files/{file_id}/download")
     async def download_file_disabled(file_id: str):
         raise HTTPException(status_code=503, detail="File service not available")
-    
+
     @api_router.delete("/files/{file_id}")
     async def delete_file_disabled(file_id: str):
         raise HTTPException(status_code=503, detail="File service not available")
-    
+
     @api_router.get("/files")
     async def list_files_disabled():
         raise HTTPException(status_code=503, detail="File service not available")

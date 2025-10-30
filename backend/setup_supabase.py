@@ -12,31 +12,31 @@ from dotenv import load_dotenv
 def check_supabase_config():
     """Check if Supabase is properly configured"""
     load_dotenv()
-    
+
     supabase_url = os.environ.get('SUPABASE_URL', '')
     supabase_key = os.environ.get('SUPABASE_KEY', '')
-    
+
     print("🔍 Checking Supabase Configuration...")
     print("=" * 50)
-    
+
     if not supabase_url or supabase_url == 'your_supabase_project_url':
         print("❌ SUPABASE_URL not configured")
         return False
-    
+
     if not supabase_key or supabase_key == 'your_supabase_anon_key':
         print("❌ SUPABASE_KEY not configured")
         return False
-    
+
     print(f"✅ SUPABASE_URL: {supabase_url[:30]}...")
     print(f"✅ SUPABASE_KEY: {supabase_key[:30]}...")
-    
+
     return True
 
 def create_demo_supabase_config():
     """Create a demo Supabase configuration for testing"""
     print("\n🛠️  Creating Demo Supabase Configuration...")
     print("=" * 50)
-    
+
     # For demo purposes, we'll create a mock Supabase setup
     demo_config = """
 # Demo Supabase Configuration
@@ -49,29 +49,29 @@ HIPAA_ENCRYPTION_KEY=demo-encryption-key-change-in-production
 ENVIRONMENT=development
 ALLOWED_HOSTS=localhost,yourdomain.com
 """
-    
+
     env_file = Path('.env')
-    
+
     # Backup existing .env if it exists
     if env_file.exists():
         backup_file = Path('.env.backup')
         env_file.rename(backup_file)
         print(f"📁 Backed up existing .env to {backup_file}")
-    
+
     # Write new demo config
     with open(env_file, 'w', encoding='utf-8') as f:
         f.write(demo_config.strip())
-    
+
     print("✅ Created demo .env configuration")
     print("⚠️  This is for TESTING ONLY - replace with real Supabase credentials for production")
-    
+
     return True
 
 def setup_mock_supabase():
     """Set up a mock Supabase client for testing"""
     print("\n🎭 Setting up Mock Supabase Client...")
     print("=" * 50)
-    
+
     mock_supabase_code = '''"""
 Mock Supabase Client for Testing
 This provides a fake Supabase interface for development without a real database
@@ -85,25 +85,25 @@ class MockSupabaseTable:
     def __init__(self, table_name, mock_data):
         self.table_name = table_name
         self.mock_data = mock_data
-    
+
     def select(self, columns='*'):
         return self
-    
+
     def eq(self, column, value):
         if self.table_name == 'services':
             filtered = [item for item in self.mock_data if item.get(column) == value]
             return MockSupabaseResponse(filtered)
         return MockSupabaseResponse([])
-    
+
     def execute(self):
         return MockSupabaseResponse(self.mock_data)
-    
+
     def insert(self, data):
         return MockSupabaseResponse([data] if isinstance(data, dict) else data)
-    
+
     def update(self, data):
         return MockSupabaseResponse([data])
-    
+
     def delete(self):
         return MockSupabaseResponse([])
 
@@ -126,7 +126,7 @@ class MockSupabaseClient:
             }
             # Add more services as needed
         ]
-        
+
         self.blog_data = [
             {
                 "id": "1",
@@ -141,7 +141,7 @@ class MockSupabaseClient:
                 "readTime": "6 min read"
             }
         ]
-    
+
     def table(self, table_name):
         if table_name == 'services':
             return MockSupabaseTable(table_name, self.services_data)
@@ -151,7 +151,7 @@ class MockSupabaseClient:
             return MockSupabaseTable(table_name, [])
         else:
             return MockSupabaseTable(table_name, [])
-    
+
     def rpc(self, function_name, params=None):
         return MockSupabaseResponse([])
 
@@ -160,21 +160,21 @@ def create_client(url, key):
     print(f"🎭 Creating mock Supabase client for {url}")
     return MockSupabaseClient()
 '''
-    
+
     mock_file = Path('mock_supabase.py')
     with open(mock_file, 'w', encoding='utf-8') as f:
         f.write(mock_supabase_code)
-    
+
     print(f"✅ Created {mock_file}")
     print("✅ Mock Supabase client ready for testing")
-    
+
     return True
 
 def provide_real_supabase_instructions():
     """Provide instructions for setting up real Supabase"""
     print("\n📋 Real Supabase Setup Instructions")
     print("=" * 50)
-    
+
     instructions = """
 To set up a real Supabase project:
 
@@ -205,52 +205,52 @@ To set up a real Supabase project:
 7. ✅ Test the connection:
    python -c "from supabase import create_client; print('Supabase connected!')"
 """
-    
+
     print(instructions)
-    
+
     # Also save instructions to file
     with open('SUPABASE_SETUP_INSTRUCTIONS.md', 'w', encoding='utf-8') as f:
         f.write("# Supabase Setup Instructions\n\n" + instructions)
-    
+
     print("📄 Instructions saved to SUPABASE_SETUP_INSTRUCTIONS.md")
 
 def main():
     print("🏥 Dr. Kishan Bhalani - Supabase Setup")
     print("=" * 50)
-    
+
     if check_supabase_config():
         print("\n✅ Supabase is already configured!")
-        
+
         # Test the connection
         try:
             from supabase import create_client
             import os
-            
+
             supabase_url = os.environ.get('SUPABASE_URL')
             supabase_key = os.environ.get('SUPABASE_KEY')
-            
+
             if 'demo-project' in supabase_url:
                 print("⚠️  Using demo configuration - not a real Supabase instance")
             else:
                 client = create_client(supabase_url, supabase_key)
                 print("✅ Supabase connection test successful!")
-                
+
         except Exception as e:
             print(f"⚠️  Supabase connection test failed: {e}")
-    
+
     else:
         print("\n❌ Supabase not configured")
-        
+
         choice = input("\nChoose setup option:\n1. Create demo config (for testing)\n2. Show real Supabase setup instructions\n3. Exit\n\nEnter choice (1-3): ")
-        
+
         if choice == '1':
             create_demo_supabase_config()
             setup_mock_supabase()
             print("\n🎉 Demo setup complete! Restart your server to use the new configuration.")
-            
+
         elif choice == '2':
             provide_real_supabase_instructions()
-            
+
         else:
             print("👋 Exiting setup")
             sys.exit(0)
