@@ -1,13 +1,12 @@
-[variables]
-PYTHON_VERSION = "3.11"
+[providers]
+python = false
 
 [phases.setup]
-nixPkgs = ["python311", "python311Packages.pip", "python311Packages.setuptools", "python311Packages.wheel", "python311Packages.virtualenv"]
+nixPkgs = ["python311Full"]
 
 [phases.install]
 cmds = [
-  "python3 -c 'import ensurepip; ensurepip.bootstrap()' || echo 'ensurepip failed'",
-  "python3 -m pip --version || curl https://bootstrap.pypa.io/get-pip.py | python3",
+  "curl -sSL https://bootstrap.pypa.io/get-pip.py | python3",
   "python3 -m pip install --upgrade pip setuptools wheel",
   "python3 -m pip install -r backend/requirements.txt"
 ]
