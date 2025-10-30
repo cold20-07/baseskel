@@ -90,4 +90,8 @@ hipaa_audit.log
 # mypy
 .mypy_cache/
 .dmypy.json
-dmypy.json
+dmypy.json# Railwa
+y/Deployment configs (prevent nixpacks auto-detection)
+nixpacks.toml
+nixpacks.json
+.nixpacks/
