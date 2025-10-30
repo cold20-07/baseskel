@@ -10,7 +10,15 @@ from pathlib import Path
 # Add backend directory to Python path
 backend_dir = Path(__file__).parent / "backend"
 sys.path.insert(0, str(backend_dir))
-os.chdir(backend_dir)
+
+# Change working directory to backend for relative imports
+if backend_dir.exists():
+    os.chdir(backend_dir)
+else:
+    print(f"Warning: Backend directory not found at {backend_dir}")
+
+# Add current directory to path as well
+sys.path.insert(0, os.getcwd())
 
 from fastapi import FastAPI, APIRouter, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
