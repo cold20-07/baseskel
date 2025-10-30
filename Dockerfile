@@ -2,21 +2,12 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copy requirements first for better caching
-COPY backend/requirements.txt ./backend/requirements.txt
+# Copy requirements and install dependencies
+COPY backend/requirements.txt backend/requirements.txt
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+RUN pip install --no-cache-dir -r backend/requirements.txt
 
-# Install pip first (ensure it's available)
-RUN python3 -m ensurepip --upgrade
-
-# Install Python dependencies
-RUN python3 -m pip install --upgrade pip setuptools wheel
-RUN python3 -m pip install --no-cache-dir -r backend/requirements.txt
-
-# Copy the rest of the application
+# Copy application code
 COPY . .
 
-# Expose port
-EXPOSE 8000
-
-# Start the application
-CMD ["python3", "backend/run_server.py"]
+# Railway will use the startCommand from railway.json
