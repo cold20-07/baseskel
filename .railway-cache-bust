@@ -1,0 +1,4 @@
+# Railway cache buster - force new build detection
+# Timestamp: 2025-10-30-16:15:00
+# Build ID: system-python-nixpacks-v2
+# This file forces Railway to re-evaluate build configuration

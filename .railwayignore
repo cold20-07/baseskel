@@ -1,0 +1,9 @@
+# Force Railway to use our nixpacks.toml configuration
+# Ignore files that might trigger different auto-detection
+temp_python_files/
+*.pyc
+__pycache__/
+.pytest_cache/
+node_modules/
+frontend/node_modules/
+frontend/dist/

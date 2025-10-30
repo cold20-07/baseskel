@@ -1,11 +1,20 @@
+# Force system Python instead of Nix Python to avoid pip module issues
 [providers]
+python = false
 
 [phases.setup]
 nixPkgs = []
-aptPkgs = ["python3-full", "python3-pip", "python3-dev", "build-essential"]
+aptPkgs = ["python3-full", "python3-pip", "python3-dev", "build-essential", "curl"]
 
 [phases.install]
-cmds = ["pip3 install --no-cache-dir -r backend/requirements.txt"]
+cmds = [
+    "# Verify system Python and pip are available",
+    "python3 --version",
+    "pip3 --version",
+    "# Install requirements using system pip",
+    "pip3 install --no-cache-dir --upgrade pip setuptools wheel",
+    "pip3 install --no-cache-dir -r backend/requirements.txt"
+]
 
 [start]
 cmd = "python3 backend/run_server.py"
