@@ -2,12 +2,12 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copy requirements and install dependencies
-COPY backend/requirements.txt backend/requirements.txt
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+# Install dependencies first (better caching)
+COPY backend/requirements.txt ./backend/requirements.txt
 RUN pip install --no-cache-dir -r backend/requirements.txt
 
-# Copy application code
+# Copy the rest of the application
 COPY . .
 
-# Railway will use the startCommand from railway.json
+# Railway provides PORT automatically
+CMD uvicorn backend.server:app --host 0.0.0.0 --port ${PORT:-8000}
