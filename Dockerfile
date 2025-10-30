@@ -4,18 +4,26 @@
 FROM node:18-alpine AS frontend-builder
 
 WORKDIR /app/frontend
-COPY frontend/package*.json ./
-RUN npm ci --only=production
 
+# Copy package files
+COPY frontend/package*.json ./
+
+# Install dependencies with legacy peer deps to handle conflicts
+RUN npm ci --legacy-peer-deps
+
+# Copy frontend source code
 COPY frontend/ ./
+
+# Build the frontend
 RUN npm run build
 
 # Stage 2: Backend with frontend assets
 FROM python:3.11-slim
 
-# Install system dependencies
+# Install system dependencies including curl for health checks
 RUN apt-get update && apt-get install -y \
     gcc \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
