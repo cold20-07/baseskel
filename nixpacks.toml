@@ -2,14 +2,10 @@
 PYTHON_VERSION = "3.11"
 
 [phases.setup]
-nixPkgs = ["python311", "python311Packages.pip"]
+nixPkgs = ["python311Full", "python311Packages.pip", "python311Packages.setuptools", "python311Packages.wheel", "python311Packages.virtualenv"]
 
 [phases.install]
-cmds = [
-  "python -m ensurepip --upgrade",
-  "python -m pip install --upgrade pip setuptools wheel",
-  "python -m pip install -r backend/requirements.txt"
-]
+cmds = ["bash .nixpacks/setup.sh"]
 
 [start]
-cmd = "python backend/run_server.py"
+cmd = "source /opt/venv/bin/activate && python backend/run_server.py"
