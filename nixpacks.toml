@@ -1,15 +1,8 @@
-[providers]
-python = false
-
 [phases.setup]
-nixPkgs = ["python311Full"]
+nixPkgs = ["python311", "python311Packages.pip", "python311Packages.virtualenv"]
 
 [phases.install]
 cmds = [
-  "curl -sSL https://bootstrap.pypa.io/get-pip.py | python3",
-  "python3 -m pip install --upgrade pip setuptools wheel",
-  "python3 -m pip install -r backend/requirements.txt"
+    "python3 -m pip install --upgrade pip setuptools wheel",
+    "python3 -m pip install -r backend/requirements.txt"
 ]
-
-[start]
-cmd = "python3 backend/run_server.py"
