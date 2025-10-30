@@ -5,9 +5,12 @@ WORKDIR /app
 # Copy requirements first for better caching
 COPY backend/requirements.txt ./backend/requirements.txt
 
+# Install pip first (ensure it's available)
+RUN python3 -m ensurepip --upgrade
+
 # Install Python dependencies
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
-RUN pip install --no-cache-dir -r backend/requirements.txt
+RUN python3 -m pip install --upgrade pip setuptools wheel
+RUN python3 -m pip install --no-cache-dir -r backend/requirements.txt
 
 # Copy the rest of the application
 COPY . .
