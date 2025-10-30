@@ -1,8 +1,0 @@
-{
-  "providers": ["python"],
-  "buildCmd": "python3 -m pip install --upgrade pip && python3 -m pip install -r backend/requirements.txt",
-  "startCmd": "cd backend && python3 run_server.py",
-  "variables": {
-    "NIXPACKS_PYTHON_VERSION": "3.9"
-  }
-}
