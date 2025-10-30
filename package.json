@@ -1,8 +1,0 @@
-{
-  "name": "va-services-netlify-functions",
-  "version": "1.0.0",
-  "description": "Netlify Functions for VA Services",
-  "dependencies": {
-    "@supabase/supabase-js": "^2.38.0"
-  }
-}
