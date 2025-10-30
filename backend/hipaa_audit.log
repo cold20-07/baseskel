@@ -130,3 +130,19 @@
 2025-10-28 23:38:34,167 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
 2025-10-28 23:38:34,324 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
 2025-10-28 23:38:34,324 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: [Errno 11001] getaddrinfo failed
+2025-10-29 17:23:21,715 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-29 17:23:21,715 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-29 17:23:23,817 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "hipaa_audit_logs"'}
+2025-10-29 17:23:23,817 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "hipaa_audit_logs"'}
+2025-10-29 17:23:36,689 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-29 17:23:36,689 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-29 17:23:37,356 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "hipaa_audit_logs"'}
+2025-10-29 17:23:37,356 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "hipaa_audit_logs"'}
+2025-10-30 10:53:33,946 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 10:53:33,946 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 10:53:35,128 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 10:53:35,128 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 10:55:41,957 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-30 10:55:41,957 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
+2025-10-30 10:55:42,922 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 10:55:42,922 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
