@@ -1,5 +1,9 @@
 {
   "build": {
-    "builder": "DOCKERFILE"
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "python3 backend/run_server.py",
+    "healthcheckPath": "/api/health"
   }
 }
