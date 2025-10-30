@@ -1,0 +1,11 @@
+[providers]
+
+[phases.setup]
+nixPkgs = []
+aptPkgs = ["python3-full", "python3-pip", "python3-dev", "build-essential"]
+
+[phases.install]
+cmds = ["pip3 install --no-cache-dir -r backend/requirements.txt"]
+
+[start]
+cmd = "python3 backend/run_server.py"
