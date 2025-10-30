@@ -14,7 +14,7 @@
    SUPABASE_URL=https://cwjsyxxzdwphhlpppxau.supabase.co
    SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3anN5eHh6ZHdwaGhscHBweGF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2MzA2MTUsImV4cCI6MjA3NzIwNjYxNX0.7qmRxFhZr_rHwKRp_YaD3HB4D30feclY3xNPipoJvr0
    CORS_ORIGINS=*
-   HIPAA_ENCRYPTION_KEY=railway-prod-encryption-key-secure-random-string
+   HIPAA_ENCRYPTION_KEY=bw7Y9P3w4QJFVJatMqu8+gv8mRlWmlhAB7FHLvR8c8M=
    ENVIRONMENT=production
    ALLOWED_HOSTS=*
    PORT=8000
@@ -37,7 +37,7 @@ railway init
 railway variables set SUPABASE_URL=https://cwjsyxxzdwphhlpppxau.supabase.co
 railway variables set SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3anN5eHh6ZHdwaGhscHBweGF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2MzA2MTUsImV4cCI6MjA3NzIwNjYxNX0.7qmRxFhZr_rHwKRp_YaD3HB4D30feclY3xNPipoJvr0
 railway variables set CORS_ORIGINS=*
-railway variables set HIPAA_ENCRYPTION_KEY=railway-prod-encryption-key-secure-random-string
+railway variables set HIPAA_ENCRYPTION_KEY=bw7Y9P3w4QJFVJatMqu8+gv8mRlWmlhAB7FHLvR8c8M=
 railway variables set ENVIRONMENT=production
 railway variables set ALLOWED_HOSTS=*
 

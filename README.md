@@ -160,7 +160,7 @@ sudo supervisorctl status
 SUPABASE_URL=your_supabase_project_url
 SUPABASE_KEY=your_supabase_anon_key
 CORS_ORIGINS=http://localhost:3000,https://yourdomain.com
-HIPAA_ENCRYPTION_KEY=your-strong-encryption-key-change-in-production
+HIPAA_ENCRYPTION_KEY=bw7Y9P3w4QJFVJatMqu8+gv8mRlWmlhAB7FHLvR8c8M=
 ENVIRONMENT=development
 ALLOWED_HOSTS=localhost,yourdomain.com
 ```

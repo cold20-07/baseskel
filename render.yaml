@@ -14,7 +14,7 @@ services:
       - key: CORS_ORIGINS
         value: "*"
       - key: HIPAA_ENCRYPTION_KEY
-        value: prod-encryption-key-secure-random-string-change-this
+        value: bw7Y9P3w4QJFVJatMqu8+gv8mRlWmlhAB7FHLvR8c8M=
       - key: ENVIRONMENT
         value: production
       - key: ALLOWED_HOSTS
