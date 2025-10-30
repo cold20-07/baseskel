@@ -1,26 +1,34 @@
 #!/usr/bin/env python3
 """
-Main entry point for Railway deployment
-Dr. Kishan Bhalani Medical Documentation Services
+Railway entry point for Dr. Kishan Bhalani Medical Documentation Services
+This file helps Railway detect this as a Python project and start correctly.
 """
 
 import sys
 import os
 from pathlib import Path
 
-# Add backend directory to Python path for Railway deployment
+# Add backend directory to Python path
 backend_dir = Path(__file__).parent / "backend"
 sys.path.insert(0, str(backend_dir))
 
-# Change working directory to backend
+# Change to backend directory
 os.chdir(backend_dir)
 
-# Import the FastAPI app from server module
-from server import app
-
-# This is the ASGI application that Railway will use
-# Railway looks for 'app' variable in the main module
+# Import and run the server
 if __name__ == "__main__":
-    import uvicorn
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    try:
+        from run_server import main
+        main()
+    except ImportError:
+        # Fallback to direct server import
+        import uvicorn
+        import server
+        
+        port = int(os.environ.get("PORT", 8000))
+        uvicorn.run(
+            "server:app",
+            host="0.0.0.0",
+            port=port,
+            reload=False
+        )
