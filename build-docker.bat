@@ -47,6 +47,7 @@ if /i "%run_container%"=="y" (
     echo 🌐 Application available at: http://localhost:8000
     echo 🏥 Health check: http://localhost:8000/api/health
     echo 📋 Services API: http://localhost:8000/api/services
+    echo ℹ️  Note: If Railway deployment uses port 8080, that's normal
     
     REM Show container logs
     echo 📋 Container logs:

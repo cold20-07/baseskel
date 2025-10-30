@@ -47,12 +47,13 @@ ENV PYTHONPATH=/app/backend
 ENV PORT=8000
 ENV ENVIRONMENT=production
 
-# Expose port
+# Expose both common ports (Railway might use 8080)
 EXPOSE 8000
+EXPOSE 8080
 
-# Health check
+# Health check that works with dynamic port
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/api/health || exit 1
+    CMD curl -f http://localhost:${PORT}/api/health || curl -f http://localhost:8000/api/health || curl -f http://localhost:8080/api/health || exit 1
 
 # Start the application
 CMD ["python", "backend/run_server.py"]
