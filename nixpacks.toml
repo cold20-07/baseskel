@@ -2,10 +2,7 @@
 nixPkgs = ["python39"]
 
 [phases.install]
-cmds = ["cd backend && pip install -r requirements.txt"]
-
-[phases.build]
-cmds = ["echo 'Build phase complete'"]
+cmds = ["python -m pip install --upgrade pip setuptools wheel", "python -m pip install -r requirements.txt"]
 
 [start]
 cmd = "cd backend && python run_server.py"

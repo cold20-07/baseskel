@@ -1,19 +1,5 @@
-# Dr. Kishan Bhalani Medical Documentation Services
-# Requirements for robust deployment with monitoring
+# Root requirements file for Railway deployment
+# This ensures Railway can detect this as a Python project
 
-# Core FastAPI and server
-fastapi>=0.100.0
-uvicorn[standard]>=0.20.0
-
-# Database
-supabase>=2.0.0
-
-# Environment and validation
-python-dotenv>=1.0.0
-pydantic[email]>=2.0.0
-
-# HTTP client for health checks
-requests>=2.28.0
-
-# System monitoring (optional but recommended)
-psutil>=5.9.0
+# Install backend dependencies
+-r backend/requirements.txt
