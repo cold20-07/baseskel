@@ -8,15 +8,15 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/api/(.*)",
       "dest": "/api/index.py"
     }
   ],
   "env": {
-    "SUPABASE_URL": "https://demo-project.supabase.co",
-    "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.demo-key-for-testing",
+    "SUPABASE_URL": "https://cwjsyxxzdwphhlpppxau.supabase.co",
+    "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3anN5eHh6ZHdwaGhscHBweGF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2MzA2MTUsImV4cCI6MjA3NzIwNjYxNX0.7qmRxFhZr_rHwKRp_YaD3HB4D30feclY3xNPipoJvr0",
     "CORS_ORIGINS": "*",
-    "HIPAA_ENCRYPTION_KEY": "demo-encryption-key-change-in-production",
+    "HIPAA_ENCRYPTION_KEY": "prod-encryption-key-secure-random-string-change-this",
     "ENVIRONMENT": "production",
     "ALLOWED_HOSTS": "*"
   }

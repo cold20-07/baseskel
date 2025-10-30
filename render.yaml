@@ -1,20 +1,20 @@
 services:
   - type: web
-    name: dr-kishan-backend
+    name: va-services-backend
     env: python
     buildCommand: "cd backend && pip install -r requirements.txt"
-    startCommand: "cd backend && python deploy_server.py"
+    startCommand: "cd backend && python run_server.py"
     plan: free
     healthCheckPath: /api/health
     envVars:
       - key: SUPABASE_URL
-        value: https://demo-project.supabase.co
+        value: https://cwjsyxxzdwphhlpppxau.supabase.co
       - key: SUPABASE_KEY
-        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.demo-key-for-testing
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3anN5eHh6ZHdwaGhscHBweGF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2MzA2MTUsImV4cCI6MjA3NzIwNjYxNX0.7qmRxFhZr_rHwKRp_YaD3HB4D30feclY3xNPipoJvr0
       - key: CORS_ORIGINS
         value: "*"
       - key: HIPAA_ENCRYPTION_KEY
-        generateValue: true
+        value: prod-encryption-key-secure-random-string-change-this
       - key: ENVIRONMENT
         value: production
       - key: ALLOWED_HOSTS

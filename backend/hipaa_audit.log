@@ -146,3 +146,51 @@
 2025-10-30 10:55:41,957 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/health | Outcome: SUCCESS | PHI: False
 2025-10-30 10:55:42,922 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
 2025-10-30 10:55:42,922 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 10:58:40,858 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 10:58:40,858 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 10:58:41,841 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 10:58:41,841 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:42,225 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:42,225 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:43,308 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:43,308 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:43,699 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:43,699 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:43,982 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:43,982 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:44,284 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:44,284 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:44,599 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:44,599 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:44,906 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:44,906 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:45,216 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:45,216 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:45,632 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:45,632 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:45,884 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:45,884 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:46,181 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:46,181 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:46,451 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:46,451 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:50,111 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services/expert-consultation | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:50,111 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services/expert-consultation | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:50,363 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:50,363 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:50,631 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services/expert-consultation | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:50,631 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services/expert-consultation | Outcome: SUCCESS | PHI: False
+2025-10-30 11:02:50,864 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:02:50,864 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:04:03,014 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:04:03,014 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:04:03,797 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:04:03,797 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:04:53,175 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:04:53,175 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/services | Outcome: SUCCESS | PHI: False
+2025-10-30 11:04:54,225 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:04:54,225 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:05:09,628 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-30 11:05:09,628 - HIPAA_AUDIT - INFO - Event: AuditEventType.SYSTEM_ACCESS | User: None | IP: 127.0.0.1 | Action: GET /api/blog | Outcome: SUCCESS | PHI: False
+2025-10-30 11:05:18,216 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}
+2025-10-30 11:05:18,216 - HIPAA_AUDIT - CRITICAL - AUDIT LOGGING FAILED: {'code': 'PGRST205', 'details': None, 'hint': None, 'message': "Could not find the table 'public.hipaa_audit_logs' in the schema cache"}

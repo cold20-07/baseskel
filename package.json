@@ -1,22 +1,8 @@
 {
-  "name": "military-disability-nexus-services",
+  "name": "va-services-netlify-functions",
   "version": "1.0.0",
-  "description": "HIPAA-compliant medical documentation services for veterans",
-  "scripts": {
-    "dev": "python start_dev.py",
-    "backend": "cd backend && python run_server.py",
-    "frontend": "cd frontend && npm start",
-    "build": "cd frontend && npm run build",
-    "test-connection": "python ../test_connection.py",
-    "connect": "python ../connect_backend.py"
-  },
-  "keywords": [
-    "medical",
-    "documentation",
-    "veterans",
-    "hipaa",
-    "healthcare"
-  ],
-  "author": "Military Disability Nexus",
-  "license": "MIT"
+  "description": "Netlify Functions for VA Services",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0"
+  }
 }
