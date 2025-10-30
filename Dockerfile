@@ -1,22 +1,14 @@
-FROM python:3.11-slim
+FROM python:3.9-slim
 
+# Install system dependencies as needed
 WORKDIR /app
+COPY . /app/
 
-# Ensure pip is available with multiple methods
-RUN python3 -m ensurepip --upgrade || \
-    (curl -sSL https://bootstrap.pypa.io/get-pip.py | python3) || \
-    apt-get update && apt-get install -y python3-pip
+# Upgrade pip, setuptools, wheel
+RUN python3 -m pip install --upgrade pip setuptools wheel
 
-# Verify pip installation
-RUN python3 -m pip --version
+# Now install your requirements
+RUN python3 -m pip install -r backend/requirements.txt
 
-# Copy and install dependencies
-COPY backend/requirements.txt ./backend/requirements.txt
-RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
-RUN python3 -m pip install --no-cache-dir -r backend/requirements.txt
-
-# Copy application
-COPY . .
-
-# Start command
+# Start your app as usual
 CMD ["python3", "backend/run_server.py"]
